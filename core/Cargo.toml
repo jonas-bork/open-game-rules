@@ -1,6 +1,12 @@
 [package]
-name = "open-card-rules-core"
+name = "open-game-rules-core"
 version = "0.1.0-dev"
-edition = "2024"
+edition.workspace = true
+
+[lib]
+crate-type = ["cdylib", "lib", "staticlib"]
+name = "open_game_rules_core"
 
 [dependencies]
+crux_core = { workspace = true, features = ["testing"] }
+serde = { workspace = true, features = ["derive"] }
