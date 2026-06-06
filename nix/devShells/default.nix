@@ -2,11 +2,10 @@
   pkgs,
   git-hooks,
   system,
+  rustToolchain,
   ...
 }:
 let
-  rustToolchain = pkgs.pkgsBuildHost.rust-bin.fromRustupToolchainFile ../../rust-toolchain.toml;
-
   coreShell = pkgs.mkShell coreShellConfig;
   coreShellConfig = {
     inherit (preCommitCheck) shellHook;
