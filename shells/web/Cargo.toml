@@ -1,0 +1,8 @@
+[package]
+name = "open-game-rules-web"
+version = "0.1.0"
+edition.workspace = true
+
+[dependencies]
+open-game-rules-core = { path = "../../core" }
+leptos = { version = "0.8.19", features = ["csr"] }
