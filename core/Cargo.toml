@@ -1,0 +1,6 @@
+[package]
+name = "open-card-rules-core"
+version = "0.1.0-dev"
+edition = "2024"
+
+[dependencies]
