@@ -27,6 +27,7 @@ in
     (import ./devShells (
       inputs
       // {
+        inherit system;
         pkgs = mkPkgs system;
       }
     ))
