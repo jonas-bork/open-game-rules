@@ -1,0 +1,8 @@
+name: Reverse Asshole
+equipment:
+  - cards
+tags:
+  - party
+players:
+  min: 2
+  max: 10
