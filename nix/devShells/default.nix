@@ -24,6 +24,7 @@ let
       deadnix.enable = true; # Nix dead code checker
       markdownlint.enable = true; # Markdown
       trufflehog.enable = true; # Secret scanning
+      yamllint.enable = true; # YAML linting
 
       # Rust
       rustfmt = {

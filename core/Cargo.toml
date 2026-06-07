@@ -10,3 +10,8 @@ name = "open_game_rules_core"
 [dependencies]
 crux_core = { workspace = true, features = ["testing"] }
 serde = { workspace = true, features = ["derive"] }
+
+[build-dependencies]
+serde = { workspace = true, features = ["derive"] }
+serde_yaml = "0.9"
+serde_json = "1.0"
