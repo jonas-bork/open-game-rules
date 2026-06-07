@@ -43,6 +43,15 @@ let
       cargo-check.enable = true; # Check Cargo
       cargo-sort.enable = true; # Sort Cargo dependencies
 
+      # Tests
+      core-unit-tests = {
+        enable = true;
+        name = "Core Unit Tests";
+        entry = "${rustToolchain}/bin/cargo test";
+        files = "core/";
+        pass_filenames = false;
+      };
+
       # Misc
       check-added-large-files.enable = true;
       check-case-conflicts.enable = true;
