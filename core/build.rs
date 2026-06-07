@@ -73,8 +73,8 @@ fn main() {
     let json_output = serde_json::to_string(&all_games).expect("Failed to serialize to JSON");
     fs::write(&dest_path, json_output).expect("Failed to write generated_database.json");
 
-    // TEMPORARY FOR DEBUGGING
-    let json_output =
-        serde_json::to_string_pretty(&all_games).expect("Failed to serialize to JSON");
-    fs::write("debug-games-database.json", &json_output).unwrap();
+    // DEBUGGING
+    // let json_output =
+    //     serde_json::to_string_pretty(&all_games).expect("Failed to serialize to JSON");
+    // fs::write("debug-games-database.json", &json_output).unwrap();
 }
