@@ -5,11 +5,14 @@ use crux_core::{
 };
 use serde::{Deserialize, Serialize};
 
+use crate::game_rules::{self, GameRule, GameRules};
+
 #[derive(Default)]
 pub struct OpenGameRules;
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub enum Event {
+    Start,
     Increment,
     Decrement,
     Reset,
@@ -17,11 +20,13 @@ pub enum Event {
 
 #[derive(Default)]
 pub struct Model {
+    game_rules: GameRules,
     count: isize,
 }
 
 #[derive(Serialize, Deserialize, Clone, Default)]
 pub struct ViewModel {
+    pub game_rules: Vec<GameRule>,
     pub count: String,
 }
 
@@ -46,6 +51,10 @@ impl App for OpenGameRules {
             Event::Increment => model.count += 1,
             Event::Decrement => model.count -= 1,
             Event::Reset => model.count = 0,
+            Event::Start => {
+                model.game_rules =
+                    game_rules::load_all_rules().expect("failed to deserialize the generated games")
+            }
         }
 
         render()
@@ -53,6 +62,7 @@ impl App for OpenGameRules {
 
     fn view(&self, model: &Self::Model) -> Self::ViewModel {
         ViewModel {
+            game_rules: model.game_rules.values().cloned().collect(),
             count: format!("Count is: {}", model.count),
         }
     }
