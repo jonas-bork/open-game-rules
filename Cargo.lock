@@ -289,9 +289,9 @@ checksum = "d0a5c400df2834b80a4c3327b3aad3a4c4cd4de0629063962b03235697506a28"
 
 [[package]]
 name = "crux_core"
-version = "0.18.0"
+version = "0.19.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "581dd920caaa7062f68188b418e32d039c4a411f379cdff292ed2b13a543c489"
+checksum = "159720bb44c1a09e0089459217c8ea6c71a78d868c5bf55d5b41f8781e92af7a"
 dependencies = [
  "anyhow",
  "bincode",
@@ -307,9 +307,9 @@ dependencies = [
 
 [[package]]
 name = "crux_macros"
-version = "0.9.0"
+version = "0.10.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f84e1454fd791609f92839fd4c1f562f99f68985d51ec8f3d46fc358853df15e"
+checksum = "952c0b238735c79e917b908c140c7c5f6f6921924ebee21171203fe5fb5fc3f3"
 dependencies = [
  "darling",
  "heck",
