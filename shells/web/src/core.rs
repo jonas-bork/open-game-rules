@@ -1,9 +1,10 @@
 use std::rc::Rc;
 
 use leptos::prelude::{Update as _, WriteSignal};
-use open_game_rules_core::{Effect, Event, OpenGameRules, ViewModel};
+use open_game_rules_core::{Effect, OpenGameRules, view::ViewModel};
 
 pub type Core = Rc<open_game_rules_core::Core<OpenGameRules>>;
+pub type Event = open_game_rules_core::Event;
 
 pub fn new() -> Core {
     Rc::new(open_game_rules_core::Core::new())

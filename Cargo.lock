@@ -1176,6 +1176,7 @@ version = "0.1.0"
 dependencies = [
  "leptos",
  "open-game-rules-core",
+ "phosphor-leptos",
 ]
 
 [[package]]
@@ -1207,6 +1208,15 @@ name = "percent-encoding"
 version = "2.3.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "9b4f627cb1b25917193a259e49bdad08f671f8d9708acfd5fe0a8c1455d87220"
+
+[[package]]
+name = "phosphor-leptos"
+version = "0.8.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "c65763c7e36d6af027a0b96604ffbae96e904a0dc3b7d3cefae1b43902a694cb"
+dependencies = [
+ "leptos",
+]
 
 [[package]]
 name = "pin-project"
