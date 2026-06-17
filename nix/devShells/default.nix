@@ -6,14 +6,36 @@
   ...
 }:
 let
+  libraries = with pkgs; [
+    webkitgtk_4_1
+    gtk3
+    libsoup_3
+    openssl
+    gdk-pixbuf
+    glib
+    gobject-introspection
+    cairo
+  ];
+
   coreShell = pkgs.mkShell coreShellConfig;
   coreShellConfig = {
     inherit (preCommitCheck) shellHook;
-    packages = [
+    packages = with pkgs; [
       rustToolchain
-      pkgs.pnpm # `pnpm` is currently needed for TypeScript type generation
-      pkgs.trunk
+      trunk
+      cargo-tauri
+      pnpm
     ];
+
+    env = {
+      LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath libraries;
+    };
+
+    nativeBuildInputs = with pkgs; [
+      pkg-config
+    ];
+
+    buildInputs = libraries;
   };
 
   preCommitCheck = git-hooks.lib.${system}.run {
