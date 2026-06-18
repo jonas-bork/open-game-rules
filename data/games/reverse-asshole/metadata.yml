@@ -3,6 +3,6 @@ equipment:
   - cards
 tags:
   - party
-players:
+players: !range
   min: 2
   max: 10

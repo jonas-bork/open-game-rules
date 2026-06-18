@@ -1,9 +1,7 @@
+use open_game_rules_data_builder::Game;
 use serde::{Deserialize, Serialize};
 
-use crate::{
-    game_rules::GameRule,
-    model::{Model, game_details, game_overview},
-};
+use crate::model::{Model, game_details, game_overview};
 
 #[derive(Serialize, Deserialize, Clone, Default, PartialEq, Eq)]
 pub enum ViewModel {
@@ -15,12 +13,12 @@ pub enum ViewModel {
 
 #[derive(Serialize, Deserialize, Clone, Default, PartialEq, Eq)]
 pub struct GamesOverviewViewModel {
-    pub game_rules: Vec<(String, GameRule)>,
+    pub game_rules: Vec<(String, Game)>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Default, PartialEq, Eq)]
 pub struct GameDetailsViewModel {
-    pub game: GameRule,
+    pub game: Game,
 }
 
 impl From<&Model> for ViewModel {

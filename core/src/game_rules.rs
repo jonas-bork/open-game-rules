@@ -1,32 +1,11 @@
+use open_game_rules_data_builder::Game;
 use std::collections::HashMap;
 
-use serde::{Deserialize, Serialize};
-
-#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq, Default)]
-pub struct GameMetadata {
-    pub name: String,
-    pub equipment: Vec<String>,
-    pub tags: Vec<String>,
-    pub players: Players,
-}
-
-#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq, Default)]
-pub struct Players {
-    pub min: Option<u8>,
-    pub max: Option<u8>,
-}
-
-#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq, Default)]
-pub struct GameRule {
-    pub metadata: GameMetadata,
-    pub rules: String,
-}
-
-pub type GameRules = HashMap<String, GameRule>;
+pub type Games = HashMap<String, Game>;
 
 const GENERATED_GAMES_JSON: &str =
     include_str!(concat!(env!("OUT_DIR"), "/generated-games-database.json"));
 
-pub fn load_all_rules() -> Result<GameRules, serde_json::Error> {
+pub fn load_all_rules() -> Result<Games, serde_json::Error> {
     serde_json::from_str(GENERATED_GAMES_JSON)
 }

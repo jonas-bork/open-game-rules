@@ -11,8 +11,7 @@ name = "open_game_rules_core"
 crux_core = { workspace = true, features = ["testing"] }
 serde = { workspace = true, features = ["derive"] }
 serde_json = { workspace = true }
+open-game-rules-data-builder = { path = "../data-builder/" }
 
 [build-dependencies]
-serde = { workspace = true, features = ["derive"] }
-serde_yaml = { workspace = true }
-serde_json = { workspace = true }
+open-game-rules-data-builder = { path = "../data-builder/" }

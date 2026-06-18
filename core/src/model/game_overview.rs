@@ -1,13 +1,14 @@
 use crux_core::{Command, render::render};
+use open_game_rules_data_builder::Game;
 use serde::{Deserialize, Serialize};
 
 use crate::{
-    game_rules::{self, GameRule, GameRules},
+    game_rules::{self, Games},
     model::outcome::{Outcome, Started},
 };
 
 pub struct Model {
-    pub game_rules: GameRules,
+    pub game_rules: Games,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Eq)]
@@ -17,7 +18,7 @@ pub enum Event {
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Eq)]
 pub enum Transition {
-    GameDetails(GameRule),
+    GameDetails(Game),
 }
 
 impl Model {

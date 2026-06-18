@@ -2930,6 +2930,15 @@ name = "open-game-rules-core"
 version = "0.1.0-dev"
 dependencies = [
  "crux_core",
+ "open-game-rules-data-builder",
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "open-game-rules-data-builder"
+version = "0.1.0"
+dependencies = [
  "serde",
  "serde_json",
  "serde_yaml",
