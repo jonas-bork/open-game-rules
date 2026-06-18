@@ -17,8 +17,29 @@ let
         allowUnfreePredicate =
           pkg:
           builtins.elem (lib.getName pkg) [
-            # Allow specific unfree packages here by name
+            "android-studio"
+            "platform-tools"
+            "android-sdk-cmdline-tools"
+            "android-sdk-tools"
+            "android-sdk-platform-tools"
+            "android-sdk-emulator"
+            "system-image-36-default-x86_64"
+            "android-sdk-system-image-36-default-x86_64"
+            "emulator"
+            "tools"
+            "build-tools"
+            "platforms"
+            "sources"
+            "ndk"
+            "cmake"
+            "cmdline-tools"
+            "android-sdk-build-tools"
+            "android-sdk-platforms"
+            "android-sdk-sources"
+            "android-sdk-ndk"
           ];
+
+        android_sdk.accept_license = true;
       };
     };
 
