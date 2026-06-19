@@ -16,6 +16,10 @@ Developing the Android app:
 cargo tauri android dev
 ```
 
+For this to work you must allow port 1420 for TCP in your firewall.
+This is because Tauri in development mode has your computer host the website and the phone run the simple Tauri wrapper that connects to this website.
+This allows the website to be hot reloaded.
+
 Installing the Android app to a connected phone:
 
 ```sh
