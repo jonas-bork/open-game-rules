@@ -66,5 +66,11 @@ module.exports = {
       "matchUpdateTypes": ["minor", "patch"],
       "groupName": "Docker image minor and patch updates"
     },
+    {
+      "description": "Group all Gradle minor and patch updates together",
+      "matchManagers": ["gradle", "gradle-wrapper"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "groupName": "Gradle minor and patch updates"
+    }
   ],
 };
