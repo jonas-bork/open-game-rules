@@ -71,6 +71,11 @@ module.exports = {
       "matchManagers": ["gradle", "gradle-wrapper"],
       "matchUpdateTypes": ["minor", "patch"],
       "groupName": "Gradle minor and patch updates"
+    },
+    {
+      "description": "Pin Cargo dependencies",
+      "matchManagers": ["cargo"],
+      "rangeStrategy": "pin"
     }
   ],
 };
