@@ -1,0 +1,28 @@
+name: Dependency automation
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+env:
+  RENOVATE_VERSION: 43.233.4
+jobs:
+  renovate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Generate app token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
+        id: app-token
+        with:
+          client-id: ${{ vars.DEPS_BOT_APP_ID }}
+          private-key: ${{ secrets.DEPS_BOT_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+
+      - name: Run Renovate
+        uses: renovatebot/github-action@693b9ef15eec82123529a37c782242f091365961 # v46.1.14
+        with:
+          renovate-version: ${{ env.RENOVATE_VERSION }}
+          configurationFile: renovate-config.js
+          token: ${{ steps.app-token.outputs.token }}
