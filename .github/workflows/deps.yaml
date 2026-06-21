@@ -4,7 +4,7 @@ on:
     - cron: '0 0 * * *'
   workflow_dispatch:
 env:
-  RENOVATE_VERSION: 43.233.4
+  RENOVATE_VERSION: 43.191.2
 jobs:
   renovate:
     runs-on: ubuntu-latest
