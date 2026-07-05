@@ -1,0 +1,16 @@
+FROM nixos/nix:latest
+# Enable Nix flakes
+RUN echo "experimental-features = nix-command flakes" >> /etc/nix/nix.conf
+
+WORKDIR /app
+
+COPY flake.nix flake.lock nix/ ./
+
+# Cache
+RUN nix flake archive
+
+COPY . .
+RUN nix develop
+
+RUN echo "Run pre-commit checks"
+RUN nix develop -c pre-commit run -a
