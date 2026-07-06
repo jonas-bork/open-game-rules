@@ -10,7 +10,6 @@ COPY flake.nix flake.lock nix/ ./
 RUN nix flake archive
 
 COPY . .
-RUN nix develop
+RUN nix develop .#core
 
-RUN echo "Run pre-commit checks"
-RUN nix develop -c pre-commit run -a
+RUN echo "Run pre-commit checks" && nix develop .#core -c pre-commit run -a

@@ -6,6 +6,8 @@
   ...
 }:
 let
+  inherit (pkgs) lib;
+
   libraries = with pkgs; [
     webkitgtk_4_1
     gtk3
@@ -22,6 +24,22 @@ let
     inherit (preCommitCheck) shellHook;
     packages = with pkgs; [
       rustToolchain
+      pnpm
+    ];
+
+    env = {
+      LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath libraries;
+    };
+
+    nativeBuildInputs = with pkgs; [
+      pkg-config
+    ];
+
+    buildInputs = libraries;
+  };
+
+  androidShellConfig = lib.recursiveUpdate coreShellConfig {
+    packages = with pkgs; [
       trunk
       cargo-tauri
       pnpm
@@ -30,16 +48,9 @@ let
     ];
 
     env = {
-      LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath libraries;
       ANDROID_HOME = androidSetup.androidHome;
       NDK_HOME = androidSetup.ndkHome;
     };
-
-    nativeBuildInputs = with pkgs; [
-      pkg-config
-    ];
-
-    buildInputs = libraries;
   };
 
   preCommitCheck = git-hooks.lib.${system}.run {
@@ -135,6 +146,8 @@ let
 in
 {
   default = coreShell;
+  core = coreShell;
+  android = pkgs.mkShell androidShellConfig;
   ci = pkgs.mkShell {
     inherit (preCommitCheck) shellHook;
   };
