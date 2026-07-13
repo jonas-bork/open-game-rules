@@ -1,0 +1,21 @@
+# Git
+.github
+
+# OS / Editor files
+.DS_Store
+.vscode/
+
+# Rust
+target/
+**/*.rs.bk
+
+# Android / Gradle
+.gradle/
+build/
+*/build/
+.idea/
+*.iml
+captures/
+local.properties
+*.jks
+*.keystore
