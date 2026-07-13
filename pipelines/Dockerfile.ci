@@ -12,5 +12,5 @@ COPY rust-toolchain.toml/ ./
 RUN nix develop .#core -c true
 
 COPY . .
-
 RUN echo "Run pre-commit checks" && nix develop .#core -c pre-commit run -a
+RUN nix develop .#core -c cargo test
