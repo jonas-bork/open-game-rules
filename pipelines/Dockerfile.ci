@@ -1,15 +1,16 @@
-FROM nixos/nix:latest
+FROM nixos/nix:2.34.8@sha256:1a711b619c8a713eff32c3f8d8781b3b4d0130cb91c0a57f67e87abfeeb90b01
 # Enable Nix flakes
 RUN echo "experimental-features = nix-command flakes" >> /etc/nix/nix.conf
 
 WORKDIR /app
 
-COPY flake.nix flake.lock nix/ ./
-
-# Cache
+COPY flake.nix flake.lock ./
 RUN nix flake archive
 
+COPY nix/ ./nix/
+COPY rust-toolchain.toml/ ./
+RUN nix develop .#core -c true
+
 COPY . .
-RUN nix develop .#core
 
 RUN echo "Run pre-commit checks" && nix develop .#core -c pre-commit run -a
