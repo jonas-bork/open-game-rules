@@ -5,5 +5,5 @@ edition.workspace = true
 
 [dependencies]
 open-game-rules-core = { path = "../../core" }
-leptos = { version = "=0.8.19", features = ["csr"] }
+leptos = { version = "=0.8.20", features = ["csr"] }
 phosphor-leptos = "=0.8.0"
