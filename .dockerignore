@@ -1,21 +1,27 @@
-# Git
-.github
+# Git (Keep .git/ so pre-commit works, but ignore CI configs)
+.github/
 
 # OS / Editor files
 .DS_Store
 .vscode/
+.idea/
+*.iml
+local.properties
 
-# Rust
-target/
+# Rust / Tauri
+**/target/
 **/*.rs.bk
+
+# Node / Frontend
+node_modules/
+dist/
+out/
+.pnpm-store/
 
 # Android / Gradle
 .gradle/
 build/
 */build/
-.idea/
-*.iml
 captures/
-local.properties
 *.jks
 *.keystore
