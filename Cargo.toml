@@ -6,7 +6,7 @@ members = ["core", "data-builder", "shells/tauri", "shells/web"]
 edition = "2024"
 
 [workspace.dependencies]
-anyhow = "=1.0.102"
+anyhow = "=1.0.103"
 crux_core = "=0.19.0"
 serde = "=1.0.228"
 serde_json = "=1.0.150"
