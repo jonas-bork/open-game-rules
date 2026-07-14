@@ -15,6 +15,10 @@ module.exports = {
     commitMessageSuffix: "[SECURITY]"
   },
 
+  // Automerge
+  platformAutomerge: true,
+  automergeType: "pr",
+
   // Dependency settings
   extends: [
     "config:best-practices"
@@ -58,7 +62,8 @@ module.exports = {
       "description": "Group all GitHub Actions updates together",
       "matchManagers": ["github-actions"],
       "matchUpdateTypes": ["minor", "patch"],
-      "groupName": "GitHub Actions minor and patch updates"
+      "groupName": "GitHub Actions minor and patch updates",
+      "automerge": true
     },
     {
       "description": "Group all Docker image updates together",
