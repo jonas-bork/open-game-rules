@@ -34,8 +34,8 @@ module.exports = {
     {
       description: "Update rust-toolchain channel via GitHub releases",
       customType: "regex",
-      fileMatch: [
-        "(^|/)rust-toolchain(\\.toml)?$"
+      managerFilePatterns: [
+        "/(^|/)rust-toolchain(\\.toml)?$/"
       ],
       matchStrings: [
         "channel\\s*=\\s*\"(?<currentValue>[0-9.]+)\""
