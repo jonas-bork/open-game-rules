@@ -15,6 +15,10 @@ module.exports = {
     commitMessageSuffix: "[SECURITY]"
   },
 
+  // Automerge
+  platformAutomerge: true,
+  automergeType: "pr",
+
   // Dependency settings
   extends: [
     "config:best-practices"
@@ -30,8 +34,8 @@ module.exports = {
     {
       description: "Update rust-toolchain channel via GitHub releases",
       customType: "regex",
-      fileMatch: [
-        "(^|/)rust-toolchain(\\.toml)?$"
+      managerFilePatterns: [
+        "/(^|/)rust-toolchain(\\.toml)?$/"
       ],
       matchStrings: [
         "channel\\s*=\\s*\"(?<currentValue>[0-9.]+)\""
@@ -58,7 +62,8 @@ module.exports = {
       "description": "Group all GitHub Actions updates together",
       "matchManagers": ["github-actions"],
       "matchUpdateTypes": ["minor", "patch"],
-      "groupName": "GitHub Actions minor and patch updates"
+      "groupName": "GitHub Actions minor and patch updates",
+      "automerge": true
     },
     {
       "description": "Group all Docker image updates together",
