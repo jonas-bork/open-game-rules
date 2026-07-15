@@ -29,3 +29,8 @@ cargo tauri android build --apk
 - Add `--debug` to the command to compile in debug mode.
 - Add `--target <arch>`, where `<arch>` is the architecture of your phone, such as `aarch64`.
   This avoids compiling for architectures that you will not need.
+
+### Direnv
+
+You can use `direnv allow` to automatically enter the development environment when the terminal enters the folder.
+This defaults to download the Android development environment, but you can create the `.platform-choice` and enter `desktop` or `android` to control which development environment it enters.

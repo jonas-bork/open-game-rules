@@ -38,14 +38,22 @@ let
     buildInputs = libraries;
   };
 
-  androidShellConfig = lib.recursiveUpdate coreShellConfig {
-    packages = with pkgs; [
-      trunk
-      cargo-tauri
-      pnpm
-      android-tools
-      (pkgs.android-studio.withSdk androidSetup.packages.androidsdk)
-    ];
+  desktopShellConfig = lib.recursiveUpdate coreShellConfig {
+    packages =
+      coreShellConfig.packages
+      ++ (with pkgs; [
+        trunk
+        cargo-tauri
+      ]);
+  };
+
+  androidShellConfig = lib.recursiveUpdate desktopShellConfig {
+    packages =
+      desktopShellConfig.packages
+      ++ (with pkgs; [
+        android-tools
+        (pkgs.android-studio.withSdk androidSetup.packages.androidsdk)
+      ]);
 
     env = {
       ANDROID_HOME = androidSetup.androidHome;
@@ -138,8 +146,6 @@ in
 {
   default = coreShell;
   core = coreShell;
+  desktop = pkgs.mkShell desktopShellConfig;
   android = pkgs.mkShell androidShellConfig;
-  ci = pkgs.mkShell {
-    inherit (preCommitCheck) shellHook;
-  };
 }
