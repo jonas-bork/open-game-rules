@@ -32,15 +32,13 @@ module.exports = {
 
   customManagers: [
     {
-      description: "Update rust-toolchain channel via GitHub releases",
+      description: "Update Renovate",
       customType: "regex",
-      managerFilePatterns: [
-        "/(^|/)rust-toolchain(\\.toml)?$/"
-      ],
+      managerFilePatterns: ["/^\\.github/workflows/deps\\.ya?ml$/"],
       matchStrings: [
-        "channel\\s*=\\s*\"(?<currentValue>[0-9.]+)\""
+         "RENOVATE_VERSION:\\s*['\"]?(?<currentValue>[0-9.]+)['\"]?"
       ],
-      depNameTemplate: "rust-lang/rust",
+      depNameTemplate: "renovatebot/renovate",
       datasourceTemplate: "github-releases",
       versioningTemplate: "semver"
     }
@@ -81,6 +79,12 @@ module.exports = {
       "description": "Pin Cargo dependencies",
       "matchManagers": ["cargo"],
       "rangeStrategy": "pin"
+    },
+    {
+      description: "Update Renovate once a week and automerge",
+      matchDepNames: ["renovatebot/renovate"],
+      schedule: ["on sunday"],
+      automerge: true
     }
   ],
 };
