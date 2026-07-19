@@ -3,6 +3,10 @@ on:
   schedule:
     - cron: '0 0 * * *'
   workflow_dispatch:
+  pull_request:
+    paths:
+      - '.github/workflows/deps.yml'
+      - 'renovate-config.js'
 env:
   RENOVATE_VERSION: 43.191.2
 jobs:
@@ -38,6 +42,7 @@ jobs:
         env:
           RENOVATE_REPOSITORIES: ${{ github.repository }}
           RENOVATE_BASE_DIR: /tmp/renovate
+          RENOVATE_DRY_RUN: ${{ github.event_name == 'pull_request' && 'full' || 'false' }}
         with:
           renovate-version: ${{ env.RENOVATE_VERSION }}
           configurationFile: renovate-config.js
