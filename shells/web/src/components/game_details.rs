@@ -2,7 +2,7 @@ use leptos::prelude::*;
 use open_game_rules_core::view::GameDetailsViewModel;
 
 use crate::{
-    components::{common::button::Button, use_dispatch},
+    components::{common::button::Button, markdown_renderer::MarkdownRenderer, use_dispatch},
     core::Event,
 };
 
@@ -13,16 +13,15 @@ pub fn game_details_view(#[prop(into)] vm: Signal<GameDetailsViewModel>) -> impl
     let dispatch = use_dispatch();
 
     view! {
-        <div class="game-rules-list section text-left">
+        <div class="section text-left">
             {move || {
                 let rule = vm.read().game.clone();
                 view! {
-                    <h2 class="title is-4">{}</h2>
+                    <h1 class="title is-5">{rule.metadata.name}</h1>
                     <div class="card mb-3">
                         <div class="card-content">
-                            <p class="title is-5">{rule.metadata.name}</p>
                             // TODO: Add equipment, tags, players and also difficulty (also add the last one to the core)
-                            <p class="subtitle is-6">{rule.rules}</p>
+                            <MarkdownRenderer markdown={rule.rules} />
 
                             <Button
                                 label="Back"
