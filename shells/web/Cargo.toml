@@ -8,4 +8,4 @@ open-game-rules-core = { path = "../../core" }
 leptos = { version = "=0.8.20", features = ["csr"] }
 phosphor-leptos = "=0.8.0"
 pulldown-cmark = "=0.13.4"
-ammonia = "=4.1.3"
+ammonia = "=4.1.4"
