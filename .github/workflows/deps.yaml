@@ -8,7 +8,7 @@ on:
       - '.github/workflows/deps.yaml'
       - 'renovate-config.js'
 env:
-  RENOVATE_VERSION: 43.191.2
+  RENOVATE_VERSION: 43.272.6
 jobs:
   renovate:
     runs-on: ubuntu-latest
