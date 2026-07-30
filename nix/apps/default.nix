@@ -9,7 +9,6 @@ let
     buildInputs = shared.core.buildInputs;
 
     dontUnpack = true;
-
     installPhase = ''
       mkdir -p $out/bin
 
