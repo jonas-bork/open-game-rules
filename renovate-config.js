@@ -46,39 +46,40 @@ module.exports = {
 
   packageRules: [
     {
-      "description": "Wait 5 days before creating PRs for standard updates to ensure stability",
-      "matchUpdateTypes": ["major", "minor", "patch"],
-      "minimumReleaseAge": "5 days",
+      description: "Wait before creating PRs for standard updates to ensure stability",
+      matchUpdateTypes: ["major", "minor", "patch"],
+      minimumReleaseAge: "10 days",
     },
     {
-      "description": "Group all minor and patch Rust crate updates together",
-      "matchManagers": ["cargo"],
-      "matchUpdateTypes": ["minor", "patch"],
-      "groupName": "Rust minor and patch updates"
+      description: "Group all minor and patch Rust crate updates together",
+      matchManagers: ["cargo"],
+      matchUpdateTypes: ["minor", "patch"],
+      groupName: "Rust minor and patch updates",
+      automerge: true
     },
     {
-      "description": "Group all GitHub Actions updates together",
-      "matchManagers": ["github-actions"],
-      "matchUpdateTypes": ["minor", "patch"],
-      "groupName": "GitHub Actions minor and patch updates",
-      "automerge": true
+      description: "Group all GitHub Actions updates together",
+      matchManagers: ["github-actions"],
+      matchUpdateTypes: ["minor", "patch"],
+      groupName: "GitHub Actions minor and patch updates",
+      automerge: true
     },
     {
-      "description": "Group all Docker image updates together",
-      "matchDatasources": ["docker"],
-      "matchUpdateTypes": ["minor", "patch"],
-      "groupName": "Docker image minor and patch updates"
+      description: "Group all Docker image updates together",
+      matchDatasources: ["docker"],
+      matchUpdateTypes: ["minor", "patch"],
+      groupName: "Docker image minor and patch updates"
     },
     {
-      "description": "Group all Gradle minor and patch updates together",
-      "matchManagers": ["gradle", "gradle-wrapper"],
-      "matchUpdateTypes": ["minor", "patch"],
-      "groupName": "Gradle minor and patch updates"
+      description: "Group all Gradle minor and patch updates together",
+      matchManagers: ["gradle", "gradle-wrapper"],
+      matchUpdateTypes: ["minor", "patch"],
+      groupName: "Gradle minor and patch updates"
     },
     {
-      "description": "Pin Cargo dependencies",
-      "matchManagers": ["cargo"],
-      "rangeStrategy": "pin"
+      description: "Pin Cargo dependencies",
+      matchManagers: ["cargo"],
+      rangeStrategy: "pin"
     },
     {
       description: "Update Renovate once a week and automerge",
