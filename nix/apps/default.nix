@@ -9,11 +9,6 @@ let
     buildInputs = shared.core.buildInputs;
 
     dontUnpack = true;
-    dontConfigure = true;
-    dontBuild = true;
-    doCheck = false;
-
-    pytestCheckPhase = "true";
 
     installPhase = ''
       mkdir -p $out/bin
