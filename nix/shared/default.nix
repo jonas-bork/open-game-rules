@@ -43,7 +43,6 @@ in
           cargo = rustToolchain;
         };
       };
-      cargo-check.enable = true; # Check Cargo
       cargo-sort.enable = true; # Sort Cargo dependencies
 
       # Misc
