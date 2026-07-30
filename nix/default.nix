@@ -43,21 +43,23 @@ let
       };
     };
 
+  imports =
+    system:
+    inputs
+    // rec {
+      inherit system;
+      pkgs = mkPkgs system;
+      rustToolchain = pkgs.pkgsBuildHost.rust-bin.fromRustupToolchainFile ../rust-toolchain.toml;
+    };
+
   forAllSystemsImport =
     file:
     forAllSystems (
-      system:
-      (import file (
-        inputs
-        // rec {
-          inherit system;
-          pkgs = mkPkgs system;
-          rustToolchain = pkgs.pkgsBuildHost.rust-bin.fromRustupToolchainFile ../rust-toolchain.toml;
-        }
-      ))
+      system: (import file ((imports system) // { shared = import ./shared (imports system); }))
     );
 in
 {
   devShells = forAllSystemsImport ./devShells;
   formatter = forAllSystemsImport ./formatter;
+  apps = forAllSystemsImport ./apps;
 }
