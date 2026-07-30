@@ -60,4 +60,5 @@ in
 {
   devShells = forAllSystemsImport ./devShells;
   formatter = forAllSystemsImport ./formatter;
+  apps = forAllSystemsImport ./apps;
 }

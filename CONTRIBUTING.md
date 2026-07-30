@@ -3,5 +3,5 @@
 You run the CI using:
 
 ```sh
-docker build -f pipelines/Dockerfile.ci .
+nix run .#ci
 ```

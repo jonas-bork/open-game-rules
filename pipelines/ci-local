@@ -1,2 +1,0 @@
-#!/usr/bin/env bash
-docker build --output type=cacheonly -f pipelines/Dockerfile.ci .
