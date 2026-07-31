@@ -1,6 +1,7 @@
 {
   pkgs,
   shared,
+  rustToolchain,
   ...
 }:
 let
@@ -12,11 +13,18 @@ let
     inherit (shared.core) nativeBuildInputs buildInputs env;
   };
 
-  desktopShellConfig = lib.recursiveUpdate coreShellConfig {
+  webShellConfig = lib.recursiveUpdate coreShellConfig {
     nativeBuildInputs =
       coreShellConfig.nativeBuildInputs
       ++ (with pkgs; [
         trunk
+      ]);
+  };
+
+  desktopShellConfig = lib.recursiveUpdate webShellConfig {
+    nativeBuildInputs =
+      webShellConfig.nativeBuildInputs
+      ++ (with pkgs; [
         cargo-tauri
       ]);
   };
@@ -85,6 +93,11 @@ in
 {
   default = coreShell;
   core = coreShell;
+  web = pkgs.mkShell webShellConfig;
   desktop = pkgs.mkShell desktopShellConfig;
   android = pkgs.mkShell androidShellConfig;
+
+  rust = pkgs.mkShell {
+    packages = [ rustToolchain ];
+  };
 }
