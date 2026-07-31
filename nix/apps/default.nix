@@ -17,19 +17,22 @@ let
       #!/usr/bin/env bash
       set -euo pipefail
 
-      echo "Fetching cargo dependencies..."
+      echo "==== Fetching cargo dependencies ===="
       # pre-commit runs the Cargo checks, such as Clippy, in offline mode.
       # This means that they expect the dependencies to already be installed before running.
       cargo fetch
 
-      echo "Setting up pre-commit environment..."
+      echo ""
+      echo "==== Setting up pre-commit environment ===="
       ${shared.preCommit.shellHook}
 
-      echo "Running pre-commit checks..."
+      echo ""
+      echo "==== Running pre-commit checks ===="
       # It needs to run against a different cargo target to not mess up the cargo cache for the later "cargo test" run
       CARGO_TARGET_DIR="target/pre-commit" pre-commit run -a
 
-      echo "Running cargo tests..."
+      echo ""
+      echo "==== Running cargo tests ===="
       cargo test
       EOF
 
