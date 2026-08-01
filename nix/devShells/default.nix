@@ -17,6 +17,7 @@ let
     nativeBuildInputs =
       coreShellConfig.nativeBuildInputs
       ++ (with pkgs; [
+        tailwindcss_4
         trunk
       ]);
   };
