@@ -1,0 +1,33 @@
+{
+  "packageRules": [
+    {
+      "description": "Pin Cargo dependencies",
+      "matchManagers": [
+        "cargo"
+      ],
+      "rangeStrategy": "pin"
+    },
+    {
+      "description": "Automerge minor and patch updates for GitHub Actions",
+      "matchManagers": [
+        "github-actions"
+      ],
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
+      "automerge": true
+    },
+    {
+      "description": "Automerge minor and patch updates for Rust crates",
+      "matchManagers": [
+        "cargo"
+      ],
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
+      "automerge": true
+    }
+  ]
+}
