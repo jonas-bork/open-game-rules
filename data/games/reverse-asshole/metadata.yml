@@ -3,6 +3,7 @@ equipment:
   - cards
 tags:
   - party
+  - free-for-all
 players: !range
   min: 2
   max: 10
