@@ -3,6 +3,8 @@ equipment:
   - cards
 tags:
   - party
+  - easy to learn
+  - free-for-all
 players: !range
   min: 2
   max: 10

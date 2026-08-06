@@ -1,8 +1,15 @@
 use leptos::prelude::*;
 use open_game_rules_core::view::GamesOverviewViewModel;
+use phosphor_leptos::Icon;
 
 use crate::{
-    components::{common::button::Button, use_dispatch},
+    components::{
+        common::{
+            badge::{Badge, BadgeVariant},
+            button::Button,
+        },
+        use_dispatch,
+    },
     core::Event,
 };
 
@@ -21,8 +28,40 @@ pub fn games_overview_view(#[prop(into)] vm: Signal<GamesOverviewViewModel>) -> 
                     view! {
                         <div class="mb-4 rounded-xl border border-gray-200 bg-white shadow-sm transition-shadow hover:shadow-md">
                             <div class="p-5 flex flex-col items-start">
-                                <p class="mb-4 text-lg font-semibold text-gray-800">{rule.metadata.name}</p>
-                                // TODO: Add equipment, tags, players and also difficulty (also add the last one to the core)
+                                <p class="mb-4 text-lg font-semibold text-gray-800">{rule.name}</p>
+
+                                // Badges
+                                <div class="flex flex-col gap-x-2 gap-y-1">
+                                    <div class="flex flex-row gap-x-2 gap-y-1">
+                                        // Equipment
+                                        <Badge variant=BadgeVariant::Blue>
+                                            <Icon icon=phosphor_leptos::PACKAGE size="18px" />
+                                            <span>{rule.equipment.into_iter().next().unwrap()}</span>
+                                        </Badge>
+
+                                        // Players
+                                        <Badge variant=BadgeVariant::Blue>
+                                            <Icon icon=phosphor_leptos::USERS size="18px" />
+                                            <span>
+                                                {match rule.players {
+                                                    open_game_rules_core::Players::Exact(n) => n.to_string(),
+                                                    open_game_rules_core::Players::Range { min, max } => format!("{min} - {max}"),
+                                                }}
+                                            </span>
+                                        </Badge>
+
+                                        // TODO: Add difficulty (also to the core)
+                                    </div>
+                                    <div class="flex flex-row gap-x-2 gap-y-1">
+                                        {
+                                            rule.tags.into_iter().map(|tag| {
+                                                view! {
+                                                    <Badge>{tag.clone()}</Badge>
+                                                }
+                                            }).collect::<Vec<_>>()
+                                        }
+                                    </div>
+                                </div>
 
                                 <Button
                                     label="Details"

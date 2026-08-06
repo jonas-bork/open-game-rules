@@ -1,4 +1,4 @@
-use open_game_rules_data_builder::Game;
+use open_game_rules_data_builder::{Game, Players};
 use serde::{Deserialize, Serialize};
 
 use crate::model::{Model, game_details, game_overview};
@@ -13,12 +13,41 @@ pub enum ViewModel {
 
 #[derive(Serialize, Deserialize, Clone, Default, PartialEq, Eq)]
 pub struct GamesOverviewViewModel {
-    pub game_rules: Vec<(String, Game)>,
+    pub game_rules: Vec<(String, GameView)>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Default, PartialEq, Eq)]
 pub struct GameDetailsViewModel {
     pub game: Game,
+}
+
+#[derive(Serialize, Deserialize, Clone, Default, PartialEq, Eq)]
+pub struct GameView {
+    pub name: String,
+    pub rules: String,
+    pub equipment: Vec<String>,
+    pub tags: Vec<String>,
+    pub players: Players,
+}
+
+impl From<&Game> for GameView {
+    fn from(game: &Game) -> Self {
+        Self {
+            name: game.metadata.name.clone(),
+            rules: game.rules.clone(),
+            equipment: game
+                .metadata
+                .equipment
+                .iter()
+                .map(|equipment| match equipment {
+                    open_game_rules_data_builder::Equipment::Cards => "Cards".to_string(),
+                    open_game_rules_data_builder::Equipment::Dice => "Dice".to_string(),
+                })
+                .collect(),
+            tags: game.metadata.tags.clone(),
+            players: game.metadata.players.clone(),
+        }
+    }
 }
 
 impl From<&Model> for ViewModel {
@@ -37,7 +66,7 @@ impl From<&game_overview::Model> for GamesOverviewViewModel {
             game_rules: model
                 .game_rules
                 .iter()
-                .map(|(id, rule)| (id.clone(), rule.clone()))
+                .map(|(id, rule)| (id.clone(), rule.into()))
                 .collect(),
         }
     }
