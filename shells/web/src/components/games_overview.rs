@@ -1,6 +1,6 @@
 use leptos::prelude::*;
-use open_game_rules_core::{Equipment, view::GamesOverviewViewModel};
-use phosphor_leptos::{Icon, IconData};
+use open_game_rules_core::view::GamesOverviewViewModel;
+use phosphor_leptos::Icon;
 
 use crate::{
     components::{
@@ -33,11 +33,24 @@ pub fn games_overview_view(#[prop(into)] vm: Signal<GamesOverviewViewModel>) -> 
                                 // Badges
                                 <div class="flex flex-col gap-x-2 gap-y-1">
                                     <div class="flex flex-row gap-x-2 gap-y-1">
-                                        // TODO: Add equipment, players and also difficulty (also add the last one to the core)
+                                        // Equipment
                                         <Badge variant=BadgeVariant::Blue>
                                             <Icon icon=phosphor_leptos::PACKAGE size="18px" />
                                             <span>{rule.equipment.into_iter().next().unwrap()}</span>
                                         </Badge>
+
+                                        // Players
+                                        <Badge variant=BadgeVariant::Blue>
+                                            <Icon icon=phosphor_leptos::USERS size="18px" />
+                                            <span>
+                                                {match rule.players {
+                                                    open_game_rules_core::Players::Exact(n) => n.to_string(),
+                                                    open_game_rules_core::Players::Range { min, max } => format!("{min} - {max}"),
+                                                }}
+                                            </span>
+                                        </Badge>
+
+                                        // TODO: Add difficulty (also to the core)
                                     </div>
                                     <div class="flex flex-row gap-x-2 gap-y-1">
                                         {
