@@ -14,14 +14,14 @@ pub fn games_overview_view(#[prop(into)] vm: Signal<GamesOverviewViewModel>) -> 
 
     view! {
         <div class="py-8 px-4 text-left md:py-12">
-            <h2 class="mb-6 text-2xl font-bold text-gray-900">Games</h2>
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">Open Game Rules</h2>
 
             {move || {
                 vm.read().clone().game_rules.into_iter().map(|(id, rule)| {
                     view! {
                         <div class="mb-4 rounded-xl border border-gray-200 bg-white shadow-sm transition-shadow hover:shadow-md">
-                            <div class="p-5 flex flex-col items-start">
-                                <p class="mb-4 text-lg font-semibold text-gray-800">{rule.name}</p>
+                            <div class="p-5 flex flex-col items-start gap-2">
+                                <p class="text-lg font-semibold text-gray-800">{rule.name}</p>
 
                                 <GameBadges equipment={rule.equipment} players={rule.players} tags={rule.tags} />
 

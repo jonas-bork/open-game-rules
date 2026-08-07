@@ -16,26 +16,22 @@ pub fn game_details_view(#[prop(into)] vm: Signal<GameDetailsViewModel>) -> impl
     let dispatch = use_dispatch();
 
     view! {
-        <div class="py-8 px-4 text-left md:py-12">
+        <div class="py-8 px-4 text-left md:py-12 flex flex-col gap-4 items-start">
             {move || {
                 let rule = vm.read().game.clone();
                 view! {
-                    <h1 class="mb-6 text-2xl font-bold text-gray-900">{rule.name}</h1>
+                    <h1 class="text-2xl font-bold text-gray-900">{rule.name}</h1>
                     <GameBadges equipment={rule.equipment} players={rule.players} tags={rule.tags} />
-                    <div class="mb-4 rounded-xl border border-gray-200 bg-white shadow-sm">
-                        <div class="p-5 flex flex-col items-start">
-                            <div class="mb-6 w-full prose">
-                                <MarkdownRenderer markdown={rule.rules} />
-                            </div>
-
-                            <Button
-                                label="Back"
-                                on_click=UnsyncCallback::new(move |()| {
-                                    dispatch.run(Event::GameDetails(GameDetailsEvent::GoBack));
-                                })
-                            />
-                        </div>
+                    <div class="prose">
+                        <MarkdownRenderer markdown={rule.rules} />
                     </div>
+
+                    <Button
+                        label="Back"
+                        on_click=UnsyncCallback::new(move |()| {
+                            dispatch.run(Event::GameDetails(GameDetailsEvent::GoBack));
+                        })
+                    />
                 }
             }}
         </div>
