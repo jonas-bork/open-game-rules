@@ -3,6 +3,7 @@ use leptos::prelude::{UnsyncCallback, expect_context};
 use crate::core::Event;
 
 pub mod common;
+pub mod game_badges;
 pub mod game_details;
 pub mod games_overview;
 pub mod markdown_renderer;

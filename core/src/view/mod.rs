@@ -1,4 +1,4 @@
-use open_game_rules_data_builder::{Game, Players};
+use open_game_rules_data_builder::{Equipment, Game, Players};
 use serde::{Deserialize, Serialize};
 
 use crate::model::{Model, game_details, game_overview};
@@ -18,7 +18,7 @@ pub struct GamesOverviewViewModel {
 
 #[derive(Serialize, Deserialize, Clone, Default, PartialEq, Eq)]
 pub struct GameDetailsViewModel {
-    pub game: Game,
+    pub game: GameView,
 }
 
 #[derive(Serialize, Deserialize, Clone, Default, PartialEq, Eq)]
@@ -39,14 +39,18 @@ impl From<&Game> for GameView {
                 .metadata
                 .equipment
                 .iter()
-                .map(|equipment| match equipment {
-                    open_game_rules_data_builder::Equipment::Cards => "Cards".to_string(),
-                    open_game_rules_data_builder::Equipment::Dice => "Dice".to_string(),
-                })
+                .map(equipment_to_string)
                 .collect(),
             tags: game.metadata.tags.clone(),
             players: game.metadata.players.clone(),
         }
+    }
+}
+
+fn equipment_to_string(equipment: &Equipment) -> String {
+    match equipment {
+        open_game_rules_data_builder::Equipment::Cards => "Cards".to_string(),
+        open_game_rules_data_builder::Equipment::Dice => "Dice".to_string(),
     }
 }
 
@@ -75,7 +79,7 @@ impl From<&game_overview::Model> for GamesOverviewViewModel {
 impl From<&game_details::Model> for GameDetailsViewModel {
     fn from(model: &game_details::Model) -> Self {
         Self {
-            game: model.game.clone(),
+            game: (&model.game).into(),
         }
     }
 }
