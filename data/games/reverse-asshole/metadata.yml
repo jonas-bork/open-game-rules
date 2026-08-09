@@ -1,9 +1,8 @@
 name: Reverse Asshole
 equipment:
   - cards
+complexity: 3
 tags:
   - party
   - free-for-all
-players: !range
-  min: 2
-  max: 10
+players: 2 - 10

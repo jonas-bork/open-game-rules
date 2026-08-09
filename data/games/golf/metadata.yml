@@ -1,10 +1,9 @@
 name: Golf
 equipment:
   - cards
+complexity: 1
 tags:
   - party
   - easy to learn
   - free-for-all
-players: !range
-  min: 2
-  max: 10
+players: 2 - 10

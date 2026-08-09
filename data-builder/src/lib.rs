@@ -15,10 +15,21 @@ pub enum Equipment {
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq, Default)]
+pub enum Complexity {
+    #[default]
+    Light,
+    MediumLight,
+    Medium,
+    MediumHeavy,
+    Heavy,
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq, Default)]
 #[serde(rename_all = "kebab-case")]
 pub struct GameMetadata {
     pub name: String,
     pub equipment: Vec<Equipment>,
+    pub complexity: Complexity,
     pub tags: Vec<String>,
     pub players: Players,
 }
@@ -29,6 +40,38 @@ pub type PlayerCount = u8;
 pub enum Players {
     Exact(PlayerCount),
     Range { min: PlayerCount, max: PlayerCount },
+}
+
+impl TryFrom<&str> for Players {
+    type Error = &'static str;
+
+    fn try_from(value: &str) -> Result<Self, Self::Error> {
+        let value = value.trim();
+
+        if let Some((min_str, max_str)) = value.split_once('-') {
+            let min = min_str
+                .trim()
+                .parse::<PlayerCount>()
+                .map_err(|_| "Failed to parse the minimum player count")?;
+
+            let max = max_str
+                .trim()
+                .parse::<PlayerCount>()
+                .map_err(|_| "Failed to parse the maximum player count")?;
+
+            if min > max {
+                return Err("Minimum player count cannot be greater than maximum");
+            }
+
+            Ok(Players::Range { min, max })
+        } else {
+            let count = value
+                .parse::<PlayerCount>()
+                .map_err(|_| "Failed to parse the exact player count")?;
+
+            Ok(Players::Exact(count))
+        }
+    }
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq, Default)]

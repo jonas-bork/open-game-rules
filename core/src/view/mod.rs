@@ -1,4 +1,4 @@
-use open_game_rules_data_builder::{Equipment, Game, Players};
+use open_game_rules_data_builder::{Complexity, Equipment, Game, Players};
 use serde::{Deserialize, Serialize};
 
 use crate::model::{Model, game_details, game_overview};
@@ -27,6 +27,7 @@ pub struct GameView {
     pub rules: String,
     pub equipment: Vec<String>,
     pub tags: Vec<String>,
+    pub complexity: String,
     pub players: Players,
 }
 
@@ -42,6 +43,13 @@ impl From<&Game> for GameView {
                 .map(equipment_to_string)
                 .collect(),
             tags: game.metadata.tags.clone(),
+            complexity: match game.metadata.complexity {
+                Complexity::Light => "Light".to_string(),
+                Complexity::MediumLight => "Medium light".to_string(),
+                Complexity::Medium => "Medium".to_string(),
+                Complexity::MediumHeavy => "Medium heavy".to_string(),
+                Complexity::Heavy => "Heavy".to_string(),
+            },
             players: game.metadata.players.clone(),
         }
     }
