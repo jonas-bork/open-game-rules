@@ -8,6 +8,7 @@ use crate::components::common::badge::{Badge, BadgeVariant};
 pub fn game_badges(
     equipment: impl IntoIterator<Item = String> + Send + 'static,
     players: Players,
+    complexity: String,
     tags: impl IntoIterator<Item = String> + Send + 'static,
 ) -> impl IntoView {
     view! {
@@ -28,6 +29,11 @@ pub fn game_badges(
                             open_game_rules_core::Players::Range { min, max } => format!("{min} - {max}"),
                         }}
                     </span>
+                </Badge>
+
+                <Badge variant=BadgeVariant::Blue>
+                    <Icon icon=phosphor_leptos::BRAIN size="18px" />
+                    <span>{complexity}</span>
                 </Badge>
             </BadgeList>
             <BadgeList>
