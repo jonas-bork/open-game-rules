@@ -1,8 +1,11 @@
 use std::{collections::HashMap, fs, path::Path};
 
+use anyhow::{Context, Result, bail};
 use serde::Deserialize;
 
-use crate::{Complexity, Equipment, Game, GameMetadata, Players};
+use crate::{
+    Complexity, Equipment, Game, GameMetadata, Minutes, Players, PlayingTime, range::Range,
+};
 
 #[derive(Deserialize, Debug, Clone, PartialEq, Eq, Default)]
 #[serde(rename_all = "kebab-case")]
@@ -12,11 +15,14 @@ pub struct MetadataContent {
     pub complexity: u8,
     pub tags: Vec<String>,
     pub players: String,
+    pub playing_time: String,
 }
 
-impl From<MetadataContent> for GameMetadata {
-    fn from(content: MetadataContent) -> Self {
-        Self {
+impl TryFrom<MetadataContent> for GameMetadata {
+    type Error = anyhow::Error;
+
+    fn try_from(content: MetadataContent) -> Result<Self> {
+        Ok(Self {
             name: content.name,
             equipment: content.equipment,
             complexity: match content.complexity {
@@ -25,10 +31,44 @@ impl From<MetadataContent> for GameMetadata {
                 3 => Complexity::Medium,
                 4 => Complexity::MediumHeavy,
                 5 => Complexity::Heavy,
-                _ => panic!("Unsupported complexity level '{}'", content.complexity),
+                _ => bail!("Unsupported complexity level '{}'", content.complexity),
             },
             tags: content.tags,
-            players: Players::try_from(content.players.as_str()).unwrap(),
+            players: Players::try_from(content.players.as_str())
+                .context("failed to parse players")?,
+            playing_time: PlayingTime::try_from(content.playing_time.as_str())
+                .context("failed to parse playing time")?,
+        })
+    }
+}
+
+impl TryFrom<&str> for PlayingTime {
+    type Error = anyhow::Error;
+
+    fn try_from(s: &str) -> Result<Self> {
+        let s = s.trim();
+
+        if let Some((min_str, max_str)) = s.split_once('-') {
+            let min = min_str
+                .trim()
+                .parse::<Minutes>()
+                .context("Failed to parse the minimum playing time")?;
+
+            let max = max_str
+                .trim()
+                .parse::<Minutes>()
+                .context("Failed to parse the maximum playing time")?;
+
+            let range = Range::new(min, max)
+                .context("Minimum playing time cannot be greater than maximum")?;
+
+            Ok(PlayingTime::Range(range))
+        } else {
+            let count = s
+                .parse::<Minutes>()
+                .context("Failed to parse the exact playing time")?;
+
+            Ok(PlayingTime::Exact(count))
         }
     }
 }
@@ -52,7 +92,7 @@ pub fn read(data_dir: &Path) -> HashMap<String, Game> {
 
                     let metadata_content: MetadataContent = serde_yaml::from_str(&yaml_content)
                         .unwrap_or_else(|e| panic!("Invalid YAML in {metadata_path:?}: {e:?}"));
-                    let metadata = GameMetadata::from(metadata_content);
+                    let metadata = GameMetadata::try_from(metadata_content).unwrap();
 
                     let rules = fs::read_to_string(&rules_path)
                         .unwrap_or_else(|e| panic!("Failed to read {rules_path:?}: {e:?}"));

@@ -21,7 +21,7 @@ pub fn game_details_view(#[prop(into)] vm: Signal<GameDetailsViewModel>) -> impl
                 let rule = vm.read().game.clone();
                 view! {
                     <h1 class="text-2xl font-bold text-gray-900">{rule.name}</h1>
-                    <GameBadges equipment={rule.equipment} players={rule.players} tags={rule.tags} complexity={rule.complexity} />
+                    <GameBadges equipment={rule.equipment} players={rule.players} tags={rule.tags} complexity={rule.complexity} playing_time={rule.playing_time} />
                     <div class="prose">
                         <MarkdownRenderer markdown={rule.rules} />
                     </div>

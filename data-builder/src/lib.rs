@@ -1,10 +1,15 @@
+mod range;
 pub mod read;
 
 use std::fs;
 use std::path::Path;
 
+use anyhow::Context;
+use anyhow::bail;
 use serde::Deserialize;
 use serde::Serialize;
+
+use crate::range::Range;
 
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq, Default)]
 #[serde(rename_all = "kebab-case")]
@@ -32,6 +37,15 @@ pub struct GameMetadata {
     pub complexity: Complexity,
     pub tags: Vec<String>,
     pub players: Players,
+    pub playing_time: PlayingTime,
+}
+
+pub type Minutes = u8;
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
+#[serde(rename_all = "kebab-case")]
+pub enum PlayingTime {
+    Exact(Minutes),
+    Range(Range<Minutes>),
 }
 
 pub type PlayerCount = u8;
@@ -43,7 +57,7 @@ pub enum Players {
 }
 
 impl TryFrom<&str> for Players {
-    type Error = &'static str;
+    type Error = anyhow::Error;
 
     fn try_from(value: &str) -> Result<Self, Self::Error> {
         let value = value.trim();
@@ -52,22 +66,22 @@ impl TryFrom<&str> for Players {
             let min = min_str
                 .trim()
                 .parse::<PlayerCount>()
-                .map_err(|_| "Failed to parse the minimum player count")?;
+                .context("Failed to parse the minimum player count")?;
 
             let max = max_str
                 .trim()
                 .parse::<PlayerCount>()
-                .map_err(|_| "Failed to parse the maximum player count")?;
+                .context("Failed to parse the maximum player count")?;
 
             if min > max {
-                return Err("Minimum player count cannot be greater than maximum");
+                bail!("Minimum player count cannot be greater than maximum");
             }
 
             Ok(Players::Range { min, max })
         } else {
             let count = value
                 .parse::<PlayerCount>()
-                .map_err(|_| "Failed to parse the exact player count")?;
+                .context("Failed to parse the exact player count")?;
 
             Ok(Players::Exact(count))
         }
@@ -93,6 +107,12 @@ pub fn build_games(data_dir: &Path, out_file: &Path) {
 }
 
 impl Default for Players {
+    fn default() -> Self {
+        Self::Exact(0)
+    }
+}
+
+impl Default for PlayingTime {
     fn default() -> Self {
         Self::Exact(0)
     }
