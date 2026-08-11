@@ -1,5 +1,4 @@
 use leptos::prelude::*;
-use open_game_rules_core::Players;
 use phosphor_leptos::Icon;
 
 use crate::components::common::badge::{Badge, BadgeVariant};
@@ -7,7 +6,8 @@ use crate::components::common::badge::{Badge, BadgeVariant};
 #[component]
 pub fn game_badges(
     equipment: impl IntoIterator<Item = String> + Send + 'static,
-    players: Players,
+    players: String,
+    playing_time: String,
     complexity: String,
     tags: impl IntoIterator<Item = String> + Send + 'static,
 ) -> impl IntoView {
@@ -23,14 +23,16 @@ pub fn game_badges(
                 // Players
                 <Badge variant=BadgeVariant::Blue>
                     <Icon icon=phosphor_leptos::USERS size="18px" />
-                    <span>
-                        {match players {
-                            open_game_rules_core::Players::Exact(n) => n.to_string(),
-                            open_game_rules_core::Players::Range { min, max } => format!("{min} - {max}"),
-                        }}
-                    </span>
+                    <span>{players}</span>
                 </Badge>
 
+                // Playing time
+                <Badge variant=BadgeVariant::Blue>
+                    <Icon icon=phosphor_leptos::CLOCK size="18px" />
+                    <span>{playing_time}</span>
+                </Badge>
+
+                // Complexity
                 <Badge variant=BadgeVariant::Blue>
                     <Icon icon=phosphor_leptos::BRAIN size="18px" />
                     <span>{complexity}</span>

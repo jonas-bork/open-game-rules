@@ -23,7 +23,7 @@ pub fn games_overview_view(#[prop(into)] vm: Signal<GamesOverviewViewModel>) -> 
                             <div class="p-5 flex flex-col items-start gap-2">
                                 <p class="text-lg font-semibold text-gray-800">{rule.name}</p>
 
-                                <GameBadges equipment={rule.equipment} players={rule.players} tags={rule.tags} complexity={rule.complexity} />
+                                <GameBadges equipment={rule.equipment} players={rule.players} tags={rule.tags} complexity={rule.complexity} playing_time={rule.playing_time} />
 
                                 <Button
                                     label="Details"

@@ -1,4 +1,4 @@
-use open_game_rules_data_builder::{Complexity, Equipment, Game, Players};
+use open_game_rules_data_builder::{Complexity, Equipment, Game, Players, PlayingTime};
 use serde::{Deserialize, Serialize};
 
 use crate::model::{Model, game_details, game_overview};
@@ -28,8 +28,11 @@ pub struct GameView {
     pub equipment: Vec<String>,
     pub tags: Vec<String>,
     pub complexity: String,
-    pub players: Players,
+    pub players: String,
+    pub playing_time: String,
 }
+
+const EN_DASH: &str = "–";
 
 impl From<&Game> for GameView {
     fn from(game: &Game) -> Self {
@@ -50,7 +53,14 @@ impl From<&Game> for GameView {
                 Complexity::MediumHeavy => "Medium heavy".to_string(),
                 Complexity::Heavy => "Heavy".to_string(),
             },
-            players: game.metadata.players.clone(),
+            players: match game.metadata.players {
+                Players::Exact(n) => n.to_string(),
+                Players::Range { min, max } => format!("{min}{EN_DASH}{max}"),
+            },
+            playing_time: match &game.metadata.playing_time {
+                PlayingTime::Exact(n) => format!("{n} min"),
+                PlayingTime::Range(range) => format!("{}{EN_DASH}{} min", range.from(), range.to()),
+            },
         }
     }
 }

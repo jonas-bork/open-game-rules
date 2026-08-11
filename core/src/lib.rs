@@ -3,7 +3,7 @@ mod game_rules;
 mod model;
 pub mod view;
 
-pub use open_game_rules_data_builder::{Equipment, Game, GameMetadata, Players};
+pub use open_game_rules_data_builder::{Game, GameMetadata};
 
 pub use app::*;
 pub use crux_core::Core;
