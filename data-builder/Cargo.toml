@@ -6,6 +6,6 @@ edition.workspace = true
 [dependencies]
 anyhow.workspace = true
 serde = { workspace = true, features = ["derive"] }
-serde_json = { workspace = true }
-serde_yaml = { workspace = true }
-thiserror = "2.0.20"
+serde_json.workspace = true
+serde_yaml.workspace = true
+thiserror.workspace = true
