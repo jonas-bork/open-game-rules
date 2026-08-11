@@ -6,15 +6,19 @@ pub struct Range<T: PartialOrd> {
     to: T,
 }
 
-pub struct InvalidRangeError;
-type Result<T> = std::result::Result<T, InvalidRangeError>;
+#[derive(thiserror::Error, Debug)]
+#[error("Invalid range ({from:?} to {to:?}) because {from:?} is larger than {to:?}")]
+pub struct InvalidRangeError<T> {
+    pub from: T,
+    pub to: T,
+}
 
 impl<T: PartialOrd> Range<T> {
-    pub fn new(from: T, to: T) -> Result<Self> {
+    pub fn new(from: T, to: T) -> Result<Self, InvalidRangeError<T>> {
         if from < to {
             Ok(Self { from, to })
         } else {
-            Err(InvalidRangeError)
+            Err(InvalidRangeError { from, to })
         }
     }
 
