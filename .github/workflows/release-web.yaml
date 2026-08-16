@@ -43,11 +43,13 @@ jobs:
         with:
           cmd-format: "nix develop .#web -c {0}"
 
+      - name: Setup GitHub Pages
+        id: setup-pages
+        uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
+
       - name: Build
         working-directory: ./shells/web
-        run: nix develop .#web -c trunk build --release --public-url /${{ github.event.repository.name }}/
-      - name: Setup GitHub Pages
-        uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
+        run: nix develop .#web -c trunk build --release --public-url ${{ steps.setup-pages.outputs.base_path }}/
 
       - name: Upload webapp as artifact
         uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
