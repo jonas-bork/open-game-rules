@@ -53,7 +53,7 @@ pub fn game_badges(
 
 #[component]
 pub fn badge_list(children: Children) -> impl IntoView {
-    let classes = "flex flex-row gap-x-2 gap-y-1";
+    let classes = "flex flex-row flex-wrap gap-x-2 gap-y-1";
 
     view! {
         <div class=classes >
