@@ -5,7 +5,7 @@
 /* dark mode mapping, allowing "dark:<css-prop>" classes to work based on whether an element has the .dark class */
 @variant dark (&:where(.dark, .dark *));
 
-/* light mode mapping, allowing "light:<css-prop>" classes to work when an element does not have the .dark class */
+/* light mode mapping, allowing "light:<css-prop>" classes to work when the html element does not have the .dark class */
 @variant light (:where(html:not(.dark)) &);
 
 /* Material design color scheme generated based on #228B22 source color */
