@@ -10,8 +10,8 @@ pub enum BadgeVariant {
 impl BadgeVariant {
     const fn classes(self) -> &'static str {
         match self {
-            Self::Primary => "bg-primary text-on-primary",
-            Self::Secondary => "bg-secondary text-on-secondary",
+            Self::Primary => "bg-primary-container text-on-primary-container",
+            Self::Secondary => "bg-secondary-container text-on-secondary-container",
         }
     }
 }
