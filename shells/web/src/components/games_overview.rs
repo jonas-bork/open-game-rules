@@ -20,7 +20,7 @@ pub fn games_overview_view(#[prop(into)] vm: Signal<GamesOverviewViewModel>) -> 
             {move || {
                 vm.read().clone().game_rules.into_iter().map(|(id, rule)| {
                     view! {
-                        <div class="mb-4 rounded-xl border border-outline bg-surface-container text-on-surface-container light:shadow-sm transition-shadow light:hover:shadow-md"
+                        <div class="mb-4 rounded-xl border border-outline bg-surface-container text-on-surface-container hover:bg-surface-container-high transition-all duration-200 ease-in-out light:shadow-sm light:hover:shadow-md"
                             on:click=move |_| {
                                 dispatch.run(Event::GameOverview(GamesOverviewEvent::SelectGame(id.clone())));
                             }
