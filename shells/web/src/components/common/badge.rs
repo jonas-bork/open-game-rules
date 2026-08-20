@@ -3,15 +3,15 @@ use leptos::prelude::*;
 #[derive(Debug, Copy, Clone, Default, PartialEq, Eq)]
 pub enum BadgeVariant {
     #[default]
-    Gray,
-    Blue,
+    Secondary,
+    Primary,
 }
 
 impl BadgeVariant {
     const fn classes(self) -> &'static str {
         match self {
-            Self::Blue => "bg-blue-100 text-blue-800",
-            Self::Gray => "bg-gray-200 text-gray-800",
+            Self::Primary => "bg-primary text-on-primary",
+            Self::Secondary => "bg-secondary text-on-secondary",
         }
     }
 }

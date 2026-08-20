@@ -11,29 +11,30 @@ pub fn game_badges(
     complexity: String,
     tags: impl IntoIterator<Item = String> + Send + 'static,
 ) -> impl IntoView {
+    let special_badge_variant = BadgeVariant::Primary;
     view! {
         <div class="flex flex-col gap-1">
             <BadgeList>
                 // Equipment
-                <Badge variant=BadgeVariant::Blue>
+                <Badge variant=special_badge_variant>
                     <Icon icon=phosphor_leptos::PACKAGE size="18px" />
                     <span>{equipment.into_iter().next().unwrap()}</span>
                 </Badge>
 
                 // Players
-                <Badge variant=BadgeVariant::Blue>
+                <Badge variant=special_badge_variant>
                     <Icon icon=phosphor_leptos::USERS size="18px" />
                     <span>{players}</span>
                 </Badge>
 
                 // Playing time
-                <Badge variant=BadgeVariant::Blue>
+                <Badge variant=special_badge_variant>
                     <Icon icon=phosphor_leptos::CLOCK size="18px" />
                     <span>{playing_time}</span>
                 </Badge>
 
                 // Complexity
-                <Badge variant=BadgeVariant::Blue>
+                <Badge variant=special_badge_variant>
                     <Icon icon=phosphor_leptos::BRAIN size="18px" />
                     <span>{complexity}</span>
                 </Badge>
