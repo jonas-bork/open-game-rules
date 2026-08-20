@@ -84,13 +84,15 @@ impl From<&Model> for ViewModel {
 
 impl From<&game_overview::Model> for GamesOverviewViewModel {
     fn from(model: &game_overview::Model) -> Self {
-        Self {
-            game_rules: model
-                .game_rules
-                .iter()
-                .map(|(id, rule)| (id.clone(), rule.into()))
-                .collect(),
-        }
+        let mut game_rules: Vec<_> = model
+            .game_rules
+            .iter()
+            .map(|(id, rule)| (id.clone(), rule.into()))
+            .collect();
+
+        game_rules.sort_unstable_by(|game1, game2| game1.0.cmp(&game2.0));
+
+        Self { game_rules }
     }
 }
 
