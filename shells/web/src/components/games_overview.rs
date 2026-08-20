@@ -3,7 +3,7 @@ use open_game_rules_core::view::GamesOverviewViewModel;
 use phosphor_leptos::Icon;
 
 use crate::{
-    components::{common::button::Button, game_badges::GameBadges, use_dispatch},
+    components::{game_badges::GameBadges, use_dispatch},
     core::Event,
 };
 
