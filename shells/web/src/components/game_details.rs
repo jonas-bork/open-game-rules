@@ -18,7 +18,7 @@ pub fn game_details_view(#[prop(into)] vm: Signal<GameDetailsViewModel>) -> impl
             {move || {
                 let rule = vm.read().game.clone();
                 view! {
-                    <div class="flex flex-row items-center text-2xl font-bold text-gray-900">
+                    <div class="flex flex-row items-center text-2xl font-bold">
                         <div class="cursor-pointer">
                             <Icon icon=phosphor_leptos::CARET_LEFT size="24px" on:click=move |_| {
                                 dispatch.run(Event::GameDetails(GameDetailsEvent::GoBack));

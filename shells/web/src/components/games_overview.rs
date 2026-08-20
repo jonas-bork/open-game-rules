@@ -15,18 +15,18 @@ pub fn games_overview_view(#[prop(into)] vm: Signal<GamesOverviewViewModel>) -> 
 
     view! {
         <div class="py-8 px-4 text-left md:py-12">
-            <h2 class="text-2xl font-bold text-gray-900 mb-4">Open Game Rules</h2>
+            <h2 class="text-2xl font-bold mb-4">Open Game Rules</h2>
 
             {move || {
                 vm.read().clone().game_rules.into_iter().map(|(id, rule)| {
                     view! {
-                        <div class="mb-4 rounded-xl border border-gray-200 bg-white shadow-sm transition-shadow hover:shadow-md"
+                        <div class="mb-4 rounded-xl border border-outline bg-surface-container text-on-surface-container hover:bg-surface-container-high transition-all duration-200 ease-in-out light:shadow-sm light:hover:shadow-md"
                             on:click=move |_| {
                                 dispatch.run(Event::GameOverview(GamesOverviewEvent::SelectGame(id.clone())));
                             }
                         >
                             <div class="p-5 flex flex-col items-start gap-2 cursor-pointer">
-                                <div class="flex flex-row items-center text-lg font-semibold text-gray-800">
+                                <div class="flex flex-row items-center text-lg font-semibold">
                                     <span>{rule.name}</span>
                                     <Icon icon=phosphor_leptos::CARET_RIGHT size="20px" />
                                 </div>
