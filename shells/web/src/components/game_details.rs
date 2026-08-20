@@ -1,11 +1,9 @@
 use leptos::prelude::*;
 use open_game_rules_core::view::GameDetailsViewModel;
+use phosphor_leptos::Icon;
 
 use crate::{
-    components::{
-        common::button::Button, game_badges::GameBadges, markdown_renderer::MarkdownRenderer,
-        use_dispatch,
-    },
+    components::{game_badges::GameBadges, markdown_renderer::MarkdownRenderer, use_dispatch},
     core::Event,
 };
 
@@ -20,18 +18,18 @@ pub fn game_details_view(#[prop(into)] vm: Signal<GameDetailsViewModel>) -> impl
             {move || {
                 let rule = vm.read().game.clone();
                 view! {
-                    <h1 class="text-2xl font-bold text-gray-900">{rule.name}</h1>
+                    <div class="flex flex-row items-center text-2xl font-bold text-gray-900">
+                        <div class="cursor-pointer">
+                            <Icon icon=phosphor_leptos::CARET_LEFT size="24px" on:click=move |_| {
+                                dispatch.run(Event::GameDetails(GameDetailsEvent::GoBack));
+                            } />
+                        </div>
+                        <h1>{rule.name}</h1>
+                    </div>
                     <GameBadges equipment={rule.equipment} players={rule.players} tags={rule.tags} complexity={rule.complexity} playing_time={rule.playing_time} />
                     <div class="prose">
                         <MarkdownRenderer markdown={rule.rules} />
                     </div>
-
-                    <Button
-                        label="Back"
-                        on_click=UnsyncCallback::new(move |()| {
-                            dispatch.run(Event::GameDetails(GameDetailsEvent::GoBack));
-                        })
-                    />
                 }
             }}
         </div>
