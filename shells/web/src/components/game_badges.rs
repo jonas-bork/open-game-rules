@@ -5,14 +5,16 @@ use crate::components::common::badge::{Badge, BadgeVariant};
 
 #[component]
 pub fn game_badges(
+    game_id: String,
     equipment: impl IntoIterator<Item = String> + Send + 'static,
     players: String,
     playing_time: String,
     complexity: String,
     tags: impl IntoIterator<Item = String> + Send + 'static,
 ) -> impl IntoView {
+    let transition_name_style = format!("view-transition-name: game-badges-{}", game_id);
     view! {
-        <div class="flex flex-col gap-2">
+        <div class="flex flex-col gap-2" style=transition_name_style>
             <BadgeList>
                 // Equipment
                 <Element icon=phosphor_leptos::PACKAGE content={equipment.into_iter().next().unwrap()} />

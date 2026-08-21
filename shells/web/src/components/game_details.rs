@@ -17,6 +17,7 @@ pub fn game_details_view(#[prop(into)] vm: Signal<GameDetailsViewModel>) -> impl
         <div class="py-8 px-4 text-left md:py-12 flex flex-col gap-4 items-start">
             {move || {
                 let rule = vm.read().game.clone();
+                let title_transition_name_style = format!("view-transition-name: game-title-{}", rule.id);
                 let go_back = move || {dispatch.run(Event::GameDetails(GameDetailsEvent::GoBack))};
                 view! {
                     <div class="flex flex-row items-center text-2xl font-bold">
@@ -25,9 +26,9 @@ pub fn game_details_view(#[prop(into)] vm: Signal<GameDetailsViewModel>) -> impl
                         }>
                             <Icon icon=phosphor_leptos::CARET_LEFT size="24px" />
                         </div>
-                        <h1>{rule.name}</h1>
+                        <h1 style=title_transition_name_style>{rule.name}</h1>
                     </div>
-                    <GameBadges equipment={rule.equipment} players={rule.players} tags={rule.tags} complexity={rule.complexity} playing_time={rule.playing_time} />
+                    <GameBadges game_id=rule.id equipment={rule.equipment} players={rule.players} tags={rule.tags} complexity={rule.complexity} playing_time={rule.playing_time} />
                     <div class="prose">
                         <MarkdownRenderer markdown={rule.rules} />
                     </div>

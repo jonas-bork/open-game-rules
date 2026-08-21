@@ -41,6 +41,7 @@ pub struct GameDetailsViewModel {
 
 #[derive(Serialize, Deserialize, Clone, Default, PartialEq, Eq)]
 pub struct GameView {
+    pub id: String,
     pub name: String,
     pub rules: String,
     pub equipment: Vec<String>,
@@ -55,6 +56,7 @@ const EN_DASH: &str = "–";
 impl From<&Game> for GameView {
     fn from(game: &Game) -> Self {
         Self {
+            id: game.metadata.id.clone(),
             name: game.metadata.name.clone(),
             rules: game.rules.clone(),
             equipment: game
