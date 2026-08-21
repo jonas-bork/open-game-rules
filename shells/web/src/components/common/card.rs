@@ -52,7 +52,6 @@ pub fn card(
             }
             on:keydown=move |e| {
                 if is_clickable && (e.key() == "Enter" || e.key() == " ") {
-                    // Prevent the default browser behavior (which scrolls the page down on Spacebar)
                     e.prevent_default();
 
                     if let Some(cb) = on_click {
