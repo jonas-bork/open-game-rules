@@ -1,6 +1,7 @@
 use crux_core::{App, macros::effect, render::RenderOperation};
 
 use crate::{
+    effects::navigation::NavigationOperation,
     model::{Event, Model},
     view::ViewModel,
 };
@@ -12,6 +13,7 @@ pub struct OpenGameRules;
 #[derive(Debug)]
 pub enum Effect {
     Render(RenderOperation),
+    Navigate(NavigationOperation),
 }
 
 impl App for OpenGameRules {

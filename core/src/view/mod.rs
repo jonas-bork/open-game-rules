@@ -1,14 +1,32 @@
 use open_game_rules_data_builder::{Complexity, Equipment, Game, Players, PlayingTime};
 use serde::{Deserialize, Serialize};
 
-use crate::model::{Model, game_details, game_overview};
+use crate::{
+    game_rules::Games,
+    model::{AppModel, Model, PageModel, game_details},
+};
+
+pub enum ViewModel {
+    Uninitialized,
+    Initialized(AppView),
+}
 
 #[derive(Serialize, Deserialize, Clone, Default, PartialEq, Eq)]
-pub enum ViewModel {
-    #[default]
-    Uninitialized,
+pub struct AppView {
+    pub path: String,
+    pub page: PageView,
+}
+
+#[derive(Serialize, Deserialize, Clone, PartialEq, Eq)]
+pub enum PageView {
     GamesOverview(GamesOverviewViewModel),
     GameDetails(GameDetailsViewModel),
+}
+
+impl Default for PageView {
+    fn default() -> Self {
+        Self::GamesOverview(GamesOverviewViewModel::default())
+    }
 }
 
 #[derive(Serialize, Deserialize, Clone, Default, PartialEq, Eq)]
@@ -76,16 +94,28 @@ impl From<&Model> for ViewModel {
     fn from(model: &Model) -> Self {
         match model {
             Model::Uninitialized => Self::Uninitialized,
-            Model::GameOverview(model) => Self::GamesOverview(model.into()),
-            Model::GameDetails(model) => Self::GameDetails(model.into()),
+            Model::Initialized(app_model) => Self::Initialized(app_model.into()),
         }
     }
 }
 
-impl From<&game_overview::Model> for GamesOverviewViewModel {
-    fn from(model: &game_overview::Model) -> Self {
-        let mut game_rules: Vec<_> = model
-            .game_rules
+impl From<&AppModel> for AppView {
+    fn from(model: &AppModel) -> Self {
+        Self {
+            path: model.path.clone(),
+            page: match &model.page {
+                PageModel::GamesOverview(_) => {
+                    PageView::GamesOverview(GamesOverviewViewModel::new(&model.game_rules))
+                }
+                PageModel::GameDetails(model) => PageView::GameDetails(model.into()),
+            },
+        }
+    }
+}
+
+impl GamesOverviewViewModel {
+    fn new(game_rules: &Games) -> Self {
+        let mut game_rules: Vec<_> = game_rules
             .iter()
             .map(|(id, rule)| (id.clone(), rule.into()))
             .collect();
