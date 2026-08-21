@@ -24,9 +24,12 @@ pub fn games_overview_view(#[prop(into)] vm: Signal<GamesOverviewViewModel>) -> 
             {move || {
                 vm.read().clone().game_rules.into_iter().map(|(id, rule)| {
                     let transition_name_style = format!("view-transition-name: game-title-{}", id);
+                    let container_transition_name_style =
+                        format!("view-transition-name: game-container-{}", rule.id);
                     view! {
                         <Card
                             variant=CardVariant::Outlined
+                            style=container_transition_name_style
                             on_click=move |_| {
                                 dispatch.run(Event::GameOverview(GamesOverviewEvent::SelectGame(id.clone())));
                             }

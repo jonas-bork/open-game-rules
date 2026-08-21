@@ -27,6 +27,7 @@ impl CardVariant {
 pub fn card(
     variant: CardVariant,
     #[prop(optional, into)] on_click: Option<Callback<()>>,
+    #[prop(optional, into)] style: Option<String>,
     children: Children,
 ) -> impl IntoView {
     let mut class = format!(
@@ -45,6 +46,7 @@ pub fn card(
     view! {
         <div
             class=class
+            style=style
             on:click=move |_| {
                 if let Some(on_click) = on_click {
                     on_click.run(());
