@@ -18,11 +18,10 @@ pub struct MetadataContent {
     pub playing_time: String,
 }
 
-impl TryFrom<MetadataContent> for GameMetadata {
-    type Error = anyhow::Error;
-
-    fn try_from(content: MetadataContent) -> Result<Self> {
+impl GameMetadata {
+    fn try_from_content(id: String, content: MetadataContent) -> Result<Self> {
         Ok(Self {
+            id: id,
             name: content.name,
             equipment: content.equipment,
             complexity: match content.complexity {
@@ -92,7 +91,8 @@ pub fn read(data_dir: &Path) -> HashMap<String, Game> {
 
                     let metadata_content: MetadataContent = serde_yaml::from_str(&yaml_content)
                         .unwrap_or_else(|e| panic!("Invalid YAML in {metadata_path:?}: {e:?}"));
-                    let metadata = GameMetadata::try_from(metadata_content).unwrap();
+                    let metadata =
+                        GameMetadata::try_from_content(game_id.clone(), metadata_content).unwrap();
 
                     let rules = fs::read_to_string(&rules_path)
                         .unwrap_or_else(|e| panic!("Failed to read {rules_path:?}: {e:?}"));

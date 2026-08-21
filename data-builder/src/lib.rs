@@ -32,6 +32,7 @@ pub enum Complexity {
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq, Default)]
 #[serde(rename_all = "kebab-case")]
 pub struct GameMetadata {
+    pub id: String,
     pub name: String,
     pub equipment: Vec<Equipment>,
     pub complexity: Complexity,

@@ -3,13 +3,11 @@ use open_game_rules_data_builder::Game;
 use serde::{Deserialize, Serialize};
 
 use crate::{
-    game_rules::{self, Games},
-    model::outcome::{Outcome, Started},
+    Effect,
+    model::{NavigateEvent, outcome::Started},
 };
 
-pub struct Model {
-    pub game_rules: Games,
-}
+pub struct Model;
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Eq)]
 pub enum Event {
@@ -23,25 +21,18 @@ pub enum Transition {
 
 impl Model {
     pub fn start() -> Started<Self, crate::Event> {
-        let game_rules =
-            game_rules::load_all_rules().expect("failed to deserialize the generated games");
-
         Started {
-            state: Self { game_rules },
+            state: Self,
             command: render(),
         }
     }
 
-    pub fn update(self, event: Event) -> Outcome<Self, Transition, Event> {
+    pub fn update(&mut self, event: Event) -> Command<Effect, crate::Event> {
         match event {
             Event::SelectGame(game_id) => {
-                let rule = self
-                    .game_rules
-                    .get(&game_id)
-                    .expect("game ID does not exist")
-                    .clone();
-
-                Outcome::complete(Transition::GameDetails(rule), Command::done())
+                Command::event(crate::Event::Navigate(NavigateEvent::GameDetails {
+                    game_id,
+                }))
             }
         }
     }

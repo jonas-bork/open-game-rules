@@ -2,7 +2,10 @@ use crux_core::{Command, render::render};
 use open_game_rules_data_builder::Game;
 use serde::{Deserialize, Serialize};
 
-use crate::model::outcome::{Outcome, Started};
+use crate::{
+    Effect,
+    model::{NavigateEvent, outcome::Started},
+};
 
 pub struct Model {
     pub game: Game,
@@ -26,9 +29,9 @@ impl Model {
         }
     }
 
-    pub fn update(self, event: Event) -> Outcome<Self, Transition, Event> {
+    pub fn update(&mut self, event: Event) -> Command<Effect, crate::Event> {
         match event {
-            Event::GoBack => Outcome::complete(Transition::GamesOverview, Command::done()),
+            Event::GoBack => Command::event(crate::Event::Navigate(NavigateEvent::GamesOverview)),
         }
     }
 }
