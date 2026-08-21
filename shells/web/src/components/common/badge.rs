@@ -3,15 +3,13 @@ use leptos::prelude::*;
 #[derive(Debug, Copy, Clone, Default, PartialEq, Eq)]
 pub enum BadgeVariant {
     #[default]
-    Secondary,
-    Primary,
+    SurfaceVariant,
 }
 
 impl BadgeVariant {
     const fn classes(self) -> &'static str {
         match self {
-            Self::Primary => "bg-primary-container text-on-primary-container",
-            Self::Secondary => "bg-secondary-container text-on-secondary-container",
+            Self::SurfaceVariant => "bg-surface-variant text-on-surface-variant",
         }
     }
 }

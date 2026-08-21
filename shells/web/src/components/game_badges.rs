@@ -11,39 +11,26 @@ pub fn game_badges(
     complexity: String,
     tags: impl IntoIterator<Item = String> + Send + 'static,
 ) -> impl IntoView {
-    let special_badge_variant = BadgeVariant::Primary;
     view! {
-        <div class="flex flex-col gap-1">
+        <div class="flex flex-col gap-2">
             <BadgeList>
                 // Equipment
-                <Badge variant=special_badge_variant>
-                    <Icon icon=phosphor_leptos::PACKAGE size="18px" />
-                    <span>{equipment.into_iter().next().unwrap()}</span>
-                </Badge>
+                <Element icon=phosphor_leptos::PACKAGE content={equipment.into_iter().next().unwrap()} />
 
                 // Players
-                <Badge variant=special_badge_variant>
-                    <Icon icon=phosphor_leptos::USERS size="18px" />
-                    <span>{players}</span>
-                </Badge>
+                <Element icon=phosphor_leptos::USERS content={players} />
 
                 // Playing time
-                <Badge variant=special_badge_variant>
-                    <Icon icon=phosphor_leptos::CLOCK size="18px" />
-                    <span>{playing_time}</span>
-                </Badge>
+                <Element icon=phosphor_leptos::CLOCK content={playing_time} />
 
                 // Complexity
-                <Badge variant=special_badge_variant>
-                    <Icon icon=phosphor_leptos::BRAIN size="18px" />
-                    <span>{complexity}</span>
-                </Badge>
+                <Element icon=phosphor_leptos::BRAIN content=complexity />
             </BadgeList>
             <BadgeList>
                 {
                     tags.into_iter().map(|tag| {
                         view! {
-                            <Badge>{tag.clone()}</Badge>
+                            <Badge variant=BadgeVariant::SurfaceVariant>{tag.clone()}</Badge>
                         }
                     }).collect::<Vec<_>>()
                 }
@@ -53,8 +40,18 @@ pub fn game_badges(
 }
 
 #[component]
-pub fn badge_list(children: Children) -> impl IntoView {
-    let classes = "flex flex-row flex-wrap gap-x-2 gap-y-1";
+fn element(icon: phosphor_leptos::IconData, content: String) -> impl IntoView {
+    view! {
+        <div class="inline-flex flex-row items-center text-sm gap-1 font-medium">
+            <Icon icon={icon} size="18px" />
+            <span>{content}</span>
+        </div>
+    }
+}
+
+#[component]
+fn badge_list(children: Children) -> impl IntoView {
+    let classes = "flex flex-row flex-wrap gap-x-3 gap-y-1";
 
     view! {
         <div class=classes >

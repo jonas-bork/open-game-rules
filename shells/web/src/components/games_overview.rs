@@ -3,7 +3,11 @@ use open_game_rules_core::view::GamesOverviewViewModel;
 use phosphor_leptos::Icon;
 
 use crate::{
-    components::{game_badges::GameBadges, use_dispatch},
+    components::{
+        common::card::{Card, CardVariant},
+        game_badges::GameBadges,
+        use_dispatch,
+    },
     core::Event,
 };
 
@@ -14,26 +18,27 @@ pub fn games_overview_view(#[prop(into)] vm: Signal<GamesOverviewViewModel>) -> 
     let dispatch = use_dispatch();
 
     view! {
-        <div class="py-8 px-4 text-left md:py-12">
-            <h2 class="text-2xl font-bold mb-4">Open Game Rules</h2>
+        <div class="py-8 px-4 text-left flex flex-col gap-4">
+            <h2 class="text-2xl font-bold">Open Game Rules</h2>
 
             {move || {
                 vm.read().clone().game_rules.into_iter().map(|(id, rule)| {
                     view! {
-                        <div class="mb-4 rounded-xl border border-outline bg-surface-container text-on-surface-container hover:bg-surface-container-high transition-all duration-200 ease-in-out light:shadow-sm light:hover:shadow-md"
-                            on:click=move |_| {
+                        <Card
+                            variant=CardVariant::Outlined
+                            on_click=move |_| {
                                 dispatch.run(Event::GameOverview(GamesOverviewEvent::SelectGame(id.clone())));
                             }
                         >
-                            <div class="p-5 flex flex-col items-start gap-2 cursor-pointer">
-                                <div class="flex flex-row items-center text-lg font-semibold">
+                            <div class="flex flex-col items-start gap-2 cursor-pointer w-full">
+                                <div class="flex justify-between items-center text-lg font-semibold w-full">
                                     <span>{rule.name}</span>
                                     <Icon icon=phosphor_leptos::CARET_RIGHT size="20px" />
                                 </div>
 
                                 <GameBadges equipment={rule.equipment} players={rule.players} tags={rule.tags} complexity={rule.complexity} playing_time={rule.playing_time} />
                             </div>
-                        </div>
+                        </Card>
                     }
                 }).collect::<Vec<_>>()
             }}
