@@ -68,9 +68,7 @@ impl Model {
     }
 
     fn navigate(&mut self, event: NavigateEvent) -> Command<Effect, Event> {
-        let owned = std::mem::take(self);
-        let Self::Initialized(mut model) = owned else {
-            *self = owned;
+        let Self::Initialized(model) = self else {
             return Command::done();
         };
 
@@ -90,20 +88,20 @@ impl Model {
                         _ => todo!(),
                     }
                 };
-                *self = Self::Initialized(model);
                 cmd
             }
             NavigateEvent::GamesOverview => {
                 model.path = "/".to_string();
+                let cmd = navigation::push(model.path.clone());
                 let (game_overview_model, start_command) =
                     game_overview::Model::start().into_parts();
-                let cmd = start_command.and(navigation::push(model.path.clone()));
                 model.page = PageModel::GamesOverview(game_overview_model);
-                *self = Self::Initialized(model);
-                cmd
+                cmd.and(start_command)
             }
             NavigateEvent::GameDetails { game_id } => {
+                let game_id = game_id.to_lowercase();
                 model.path = format!("/game/{game_id}");
+                let cmd = navigation::push(model.path.clone());
                 let game = model
                     .game_rules
                     .get(&game_id)
@@ -112,10 +110,8 @@ impl Model {
 
                 let (game_details_model, start_command) =
                     game_details::Model::start(game).into_parts();
-                let cmd = start_command.and(navigation::push(model.path.clone()));
                 model.page = PageModel::GameDetails(game_details_model);
-                *self = Self::Initialized(model);
-                cmd
+                cmd.and(start_command)
             }
         }
     }
