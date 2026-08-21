@@ -23,20 +23,24 @@ pub fn games_overview_view(#[prop(into)] vm: Signal<GamesOverviewViewModel>) -> 
 
             {move || {
                 vm.read().clone().game_rules.into_iter().map(|(id, rule)| {
+                    let transition_name_style = format!("view-transition-name: game-title-{}", id);
+                    let container_transition_name_style =
+                        format!("view-transition-name: game-container-{}", rule.id);
                     view! {
                         <Card
                             variant=CardVariant::Outlined
+                            style=container_transition_name_style
                             on_click=move |_| {
                                 dispatch.run(Event::GameOverview(GamesOverviewEvent::SelectGame(id.clone())));
                             }
                         >
                             <div class="flex flex-col items-start gap-2 cursor-pointer w-full">
                                 <div class="flex justify-between items-center text-lg font-semibold w-full">
-                                    <span>{rule.name}</span>
+                                    <span style=transition_name_style>{rule.name}</span>
                                     <Icon icon=phosphor_leptos::CARET_RIGHT size="20px" />
                                 </div>
 
-                                <GameBadges equipment={rule.equipment} players={rule.players} tags={rule.tags} complexity={rule.complexity} playing_time={rule.playing_time} />
+                                <GameBadges game_id=rule.id equipment={rule.equipment} players={rule.players} tags={rule.tags} complexity={rule.complexity} playing_time={rule.playing_time} />
                             </div>
                         </Card>
                     }

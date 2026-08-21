@@ -15,14 +15,18 @@ impl BadgeVariant {
 }
 
 #[component]
-pub fn badge(#[prop(optional)] variant: BadgeVariant, children: Children) -> impl IntoView {
+pub fn badge(
+    #[prop(optional)] variant: BadgeVariant,
+    #[prop(optional)] style: Option<String>,
+    children: Children,
+) -> impl IntoView {
     let class = format!(
         "inline-flex gap-1.5 items-center rounded-full px-3 py-1 text-sm font-medium {}",
         variant.classes()
     );
 
     view! {
-        <div class=class>
+        <div class=class style=style>
             {children()}
         </div>
     }
