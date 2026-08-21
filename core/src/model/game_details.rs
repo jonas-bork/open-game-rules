@@ -16,11 +16,6 @@ pub enum Event {
     GoBack,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Eq)]
-pub enum Transition {
-    GamesOverview,
-}
-
 impl Model {
     pub fn start(game: Game) -> Started<Self, crate::Event> {
         Started {

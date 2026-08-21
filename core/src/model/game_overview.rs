@@ -1,5 +1,4 @@
 use crux_core::{Command, render::render};
-use open_game_rules_data_builder::Game;
 use serde::{Deserialize, Serialize};
 
 use crate::{
@@ -12,11 +11,6 @@ pub struct Model;
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Eq)]
 pub enum Event {
     SelectGame(String),
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Eq)]
-pub enum Transition {
-    GameDetails(Game),
 }
 
 impl Model {

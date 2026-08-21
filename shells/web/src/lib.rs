@@ -4,11 +4,7 @@ mod core;
 use std::rc::Rc;
 
 use leptos::prelude::*;
-use leptos_router::{
-    NavigateOptions,
-    components::Router,
-    hooks::{use_location, use_navigate},
-};
+use leptos_router::{components::Router, hooks::use_location};
 use open_game_rules_core::{
     Event, NavigateEvent,
     view::{PageView, ViewModel},

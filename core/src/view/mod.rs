@@ -3,7 +3,7 @@ use serde::{Deserialize, Serialize};
 
 use crate::{
     game_rules::Games,
-    model::{AppModel, Model, PageModel, game_details, game_overview},
+    model::{AppModel, Model, PageModel, game_details},
 };
 
 pub enum ViewModel {
