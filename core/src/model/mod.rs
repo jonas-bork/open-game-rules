@@ -4,6 +4,7 @@ pub mod outcome;
 
 use crate::{
     Effect,
+    effects::navigation,
     game_rules::{self, Games},
 };
 use crux_core::Command;
@@ -75,13 +76,19 @@ impl Model {
 
         match event {
             NavigateEvent::Path(path) => {
-                let cmd = match path.as_str() {
-                    "" | "/" => Command::event(Event::Navigate(NavigateEvent::GamesOverview)),
-                    p if p.starts_with("/game/") => {
-                        let id = p.trim_start_matches("/game/").to_string();
-                        Command::event(Event::Navigate(NavigateEvent::GameDetails { game_id: id }))
+                let cmd = if path == model.path {
+                    Command::done()
+                } else {
+                    match path.as_str() {
+                        "" | "/" => Command::event(Event::Navigate(NavigateEvent::GamesOverview)),
+                        p if p.starts_with("/game/") => {
+                            let id = p.trim_start_matches("/game/").to_string();
+                            Command::event(Event::Navigate(NavigateEvent::GameDetails {
+                                game_id: id,
+                            }))
+                        }
+                        _ => todo!(),
                     }
-                    _ => todo!(),
                 };
                 *self = Self::Initialized(model);
                 cmd
@@ -90,9 +97,10 @@ impl Model {
                 model.path = "/".to_string();
                 let (game_overview_model, start_command) =
                     game_overview::Model::start().into_parts();
+                let cmd = start_command.and(navigation::push(model.path.clone()));
                 model.page = PageModel::GamesOverview(game_overview_model);
                 *self = Self::Initialized(model);
-                start_command
+                cmd
             }
             NavigateEvent::GameDetails { game_id } => {
                 model.path = format!("/game/{game_id}");
@@ -104,9 +112,10 @@ impl Model {
 
                 let (game_details_model, start_command) =
                     game_details::Model::start(game).into_parts();
+                let cmd = start_command.and(navigation::push(model.path.clone()));
                 model.page = PageModel::GameDetails(game_details_model);
                 *self = Self::Initialized(model);
-                start_command
+                cmd
             }
         }
     }

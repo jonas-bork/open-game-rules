@@ -3101,6 +3101,7 @@ name = "open-game-rules-core"
 version = "0.1.0-dev"
 dependencies = [
  "crux_core",
+ "facet",
  "open-game-rules-data-builder",
  "serde",
  "serde_json",

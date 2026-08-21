@@ -42,33 +42,12 @@ fn AppContent() -> impl IntoView {
     });
 
     let location = use_location();
-    let navigate = use_navigate();
 
     Effect::new({
         let dispatch = dispatch.clone();
         move |_| {
-            let browser_path = location.pathname.get();
-
-            let core_path = view.with_untracked(|v| match v {
-                ViewModel::Initialized(app) => app.path.clone(),
-                ViewModel::Uninitialized => String::new(),
-            });
-
-            if browser_path != core_path {
-                dispatch.run(Event::Navigate(NavigateEvent::Path(browser_path)));
-            }
-        }
-    });
-
-    Effect::new(move |_| {
-        let core_path = view.with(|v| match v {
-            ViewModel::Initialized(app) => app.path.clone(),
-            ViewModel::Uninitialized => String::new(),
-        });
-        let browser_path = location.pathname.get_untracked();
-
-        if !core_path.is_empty() && browser_path != core_path {
-            navigate(&core_path, NavigateOptions::default());
+            let path = location.pathname.get();
+            dispatch.run(Event::Navigate(NavigateEvent::Path(path)));
         }
     });
 
