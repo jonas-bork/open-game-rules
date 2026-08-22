@@ -4,7 +4,7 @@ use leptos::prelude::*;
 pub enum Color {
     // Filled,
     // Tonal
-    //Outlined,
+    // Outlined,
     Standard,
 }
 
