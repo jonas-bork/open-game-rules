@@ -51,6 +51,15 @@ jobs:
         working-directory: ./shells/web
         run: nix develop .#web -c trunk build --release --public-url ${{ steps.setup-pages.outputs.base_path }}/
 
+      # Sets up the 404 page exactly as the index.html to allow the app to handle unknown routes.
+      # Without this, GitHub Pages throws an error when accessing a route that is not the root.
+      # This is because when accessing a page hosted on GitHub Pages, it looks for the page directly in the files.
+      # So, when accessing /game/<id>, it will look for that file, not find it, and return the 404 page.
+      # But we want the app to handle all routes, so we can simply copy the index.html file for the 404 page.
+      - name: Set up 404 page
+        working-directory: ./shells/web
+        run: cp dist/index.html dist/404.html
+
       - name: Upload webapp as artifact
         uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with:
