@@ -21,7 +21,7 @@ pub struct MetadataContent {
 impl GameMetadata {
     fn try_from_content(id: String, content: MetadataContent) -> Result<Self> {
         Ok(Self {
-            id: id,
+            id,
             name: content.name,
             equipment: content.equipment,
             complexity: match content.complexity {

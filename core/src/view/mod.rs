@@ -6,6 +6,7 @@ use crate::{
     model::{AppModel, Model, PageModel, game_details},
 };
 
+#[allow(clippy::large_enum_variant)]
 pub enum ViewModel {
     Uninitialized,
     Initialized(AppView),
