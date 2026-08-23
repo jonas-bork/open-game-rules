@@ -31,8 +31,8 @@ let
   };
 
   androidShellConfig = lib.recursiveUpdate desktopShellConfig {
-    packages =
-      desktopShellConfig.packages
+    nativeBuildInputs =
+      desktopShellConfig.nativeBuildInputs
       ++ (with pkgs; [
         android-tools
         (pkgs.android-studio.withSdk androidSetup.packages.androidsdk)
