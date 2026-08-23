@@ -40,7 +40,6 @@ fn AppContent() -> impl IntoView {
     let location = use_location();
 
     Effect::new({
-        let dispatch = dispatch.clone();
         move |_| {
             let path = location.pathname.get();
             dispatch.run(Event::Navigate(NavigateEvent::Path(path)));

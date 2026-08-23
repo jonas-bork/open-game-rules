@@ -99,7 +99,7 @@ pub struct Game {
 pub fn build_games(data_dir: &Path, out_file: &Path) {
     let games = read::read(data_dir);
     let json_output = serde_json::to_string(&games).expect("Failed to serialize to JSON");
-    fs::write(&out_file, json_output).expect("Failed to write generated_database.json");
+    fs::write(out_file, json_output).expect("Failed to write generated_database.json");
 
     // DEBUGGING
     // let json_output =

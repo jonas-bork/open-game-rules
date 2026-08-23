@@ -42,6 +42,7 @@ in
           clippy = rustToolchain;
           cargo = rustToolchain;
         };
+        settings.denyWarnings = true;
       };
       cargo-sort.enable = true; # Sort Cargo dependencies
 

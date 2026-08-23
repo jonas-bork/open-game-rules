@@ -31,7 +31,6 @@ pub enum PageModel {
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Eq)]
 pub enum Event {
     Start,
-    /// Navigate to path
     Navigate(NavigateEvent),
     GameOverview(game_overview::Event),
     GameDetails(game_details::Event),
@@ -74,7 +73,7 @@ impl Model {
 
         match event {
             NavigateEvent::Path(path) => {
-                let cmd = if path == model.path {
+                if path == model.path {
                     Command::done()
                 } else {
                     match path.as_str() {
@@ -87,8 +86,7 @@ impl Model {
                         }
                         _ => todo!(),
                     }
-                };
-                cmd
+                }
             }
             NavigateEvent::GamesOverview => {
                 model.path = "/".to_string();
@@ -117,20 +115,22 @@ impl Model {
     }
 
     fn update_game_overview(&mut self, event: game_overview::Event) -> Command<Effect, Event> {
-        if let Self::Initialized(app_model) = self {
-            if let PageModel::GamesOverview(page_model) = &mut app_model.page {
-                return page_model.update(event);
-            }
+        if let Self::Initialized(app_model) = self
+            && let PageModel::GamesOverview(page_model) = &mut app_model.page
+        {
+            return page_model.update(event);
         }
+
         Command::done()
     }
 
     fn update_game_details(&mut self, event: game_details::Event) -> Command<Effect, Event> {
-        if let Self::Initialized(app_model) = self {
-            if let PageModel::GameDetails(page_model) = &mut app_model.page {
-                return page_model.update(event);
-            }
+        if let Self::Initialized(app_model) = self
+            && let PageModel::GameDetails(page_model) = &mut app_model.page
+        {
+            return page_model.update(event);
         }
+
         Command::done()
     }
 }

@@ -27,7 +27,7 @@ pub fn game_details_view(#[prop(into)] vm: Signal<GameDetailsViewModel>) -> impl
         view! {
             <div class="py-8 px-4 text-left md:py-12 flex flex-col gap-4 items-start" style=container_transition_name_style>
                 <div class="flex flex-row items-center gap-1 text-2xl font-bold">
-                    <IconButton color=icon_button::Color::Standard on_click={move |_| go_back()}>
+                    <IconButton color=icon_button::Color::Standard on_click=go_back>
                         <Icon icon=phosphor_leptos::CARET_LEFT size="24px" />
                     </IconButton>
                     <h1 style=title_transition_name_style>{rule.name}</h1>
