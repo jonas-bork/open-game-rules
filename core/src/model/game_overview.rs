@@ -21,6 +21,7 @@ impl Model {
         }
     }
 
+    #[allow(clippy::needless_pass_by_ref_mut)]
     pub fn update(&mut self, event: Event) -> Command<Effect, crate::Event> {
         match event {
             Event::SelectGame(game_id) => {
