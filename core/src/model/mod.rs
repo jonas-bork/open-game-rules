@@ -11,6 +11,7 @@ use crux_core::Command;
 use serde::{Deserialize, Serialize};
 
 #[derive(Default)]
+#[allow(clippy::large_enum_variant)]
 pub enum Model {
     #[default]
     Uninitialized,
@@ -117,7 +118,11 @@ impl Model {
                                 game_id: id,
                             }))
                         }
-                        _ => todo!(),
+                        _ => Command::event(Event::Log(LogMessage::new(
+                            Severity::Error,
+                            "unknown path",
+                            format!("path {path} not found"),
+                        ))),
                     }
                 }
             }
@@ -133,11 +138,13 @@ impl Model {
                 let game_id = game_id.to_lowercase();
                 model.path = format!("/game/{game_id}");
                 let cmd = navigation::push(model.path.clone());
-                let game = model
-                    .game_rules
-                    .get(&game_id)
-                    .expect("game ID does not exist")
-                    .clone();
+                let Some(game) = model.game_rules.get(&game_id).cloned() else {
+                    return Command::event(Event::Log(LogMessage::new(
+                        Severity::Error,
+                        "game not found",
+                        format!("game with ID {game_id} not found"),
+                    )));
+                };
 
                 let (game_details_model, start_command) =
                     game_details::Model::start(game).into_parts();
