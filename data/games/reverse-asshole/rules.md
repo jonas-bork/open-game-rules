@@ -14,9 +14,8 @@ The turn-taking player must play a card by placing it face-up in the played card
 If the card they played is lower value than the previous top card in the played cards pile, the player must pick up all the cards in the played cards pile (including the card they just played).
 If the card instead is equal or higher value, or the played cards pile were empty, the turn goes to the next player.
 
-The ranking of the cards is as follows, from lowest value to highest value:
-3, 4, 5, 6, 7, 8, 9, jack, queen, king, ace.
-Note that 2 occurs twice in the ranking because it has both the highest and lowest value, meaning it can be put on top of any card, and any card can be put on top of it.
+The ranking of the cards (excluding special cards) is as follows, from lowest value to highest value:
+3, 4, 5, 6, 7, 8, 9, Jack, Queen, King, Ace.
 
 If a player has multiple of the same ranked card in their picked-up cards, they may play all of them at once.
 
@@ -24,7 +23,7 @@ If a player has multiple of the same ranked card in their picked-up cards, they 
 
 A special card never has a lower ranking than another card, so they never cause the player to pick up cards.
 
-- 2: can be placed on any card and any card can be placed on it. This can be viewed as it both has the highest and lowest value in the card ranking. Any card may also *jump in* on it (mechanic explained later).
+- 2: can be placed on any card, and any card can be placed on it. An alternative explanation is that it both has the highest and lowest value in the card ranking. Any card may also *jump in* on it (mechanic explained later).
 - 10: removes all cards currently in the played cards pile from play. They can be swept aside, never to be seen again in the game.
 - Joker: a see-through card, meaning it assumes the ranking equal to the card underneath it.
 
