@@ -45,7 +45,7 @@ pub struct GameView {
     pub id: String,
     pub name: String,
     pub rules: String,
-    pub equipment: Vec<String>,
+    pub equipment: String,
     pub tags: Vec<String>,
     pub complexity: String,
     pub players: String,
@@ -60,12 +60,7 @@ impl From<&Game> for GameView {
             id: game.metadata.id.clone(),
             name: game.metadata.name.clone(),
             rules: game.rules.clone(),
-            equipment: game
-                .metadata
-                .equipment
-                .iter()
-                .map(equipment_to_string)
-                .collect(),
+            equipment: equipment_to_string(&game.metadata.equipment),
             tags: game.metadata.tags.clone(),
             complexity: match game.metadata.complexity {
                 Complexity::Light => "Light".to_string(),
@@ -86,10 +81,20 @@ impl From<&Game> for GameView {
     }
 }
 
-fn equipment_to_string(equipment: &Equipment) -> String {
-    match equipment {
-        open_game_rules_data_builder::Equipment::Cards => "Cards".to_string(),
-        open_game_rules_data_builder::Equipment::Dice => "Dice".to_string(),
+fn equipment_to_string(equipment: &[Equipment]) -> String {
+    let equipment = equipment
+        .iter()
+        .map(|eq| match eq {
+            open_game_rules_data_builder::Equipment::Cards => "Cards",
+            open_game_rules_data_builder::Equipment::Dice => "Dice",
+        })
+        .collect::<Vec<_>>();
+
+    match equipment.as_slice() {
+        [] => "none".to_string(),
+        [single] => single.to_string(),
+        [first, second] => format!("{first} and {second}"),
+        [rest @ .., last] => format!("{} and {last}", rest.join(", ")),
     }
 }
 

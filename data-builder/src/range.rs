@@ -22,11 +22,11 @@ impl<T: PartialOrd> Range<T> {
         }
     }
 
-    pub fn from(&self) -> &T {
+    pub const fn from(&self) -> &T {
         &self.from
     }
 
-    pub fn to(&self) -> &T {
+    pub const fn to(&self) -> &T {
         &self.to
     }
 

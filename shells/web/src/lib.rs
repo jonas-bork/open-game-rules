@@ -15,6 +15,8 @@ use crate::components::{
 };
 
 #[component]
+#[must_use]
+#[allow(clippy::must_use_candidate)]
 pub fn App() -> impl IntoView {
     view! {
         <Router>
@@ -46,6 +48,7 @@ fn AppContent() -> impl IntoView {
         }
     });
 
+    #[allow(clippy::match_wildcard_for_single_variants)]
     let game_overview_vm = Memo::new(move |_| {
         view.with(|v| match v {
             ViewModel::Initialized(app) => match &app.page {
@@ -56,6 +59,7 @@ fn AppContent() -> impl IntoView {
         })
     });
 
+    #[allow(clippy::match_wildcard_for_single_variants)]
     let game_details_vm = Memo::new(move |_| {
         view.with(|v| match v {
             ViewModel::Initialized(app) => match &app.page {

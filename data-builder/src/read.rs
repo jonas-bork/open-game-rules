@@ -61,18 +61,19 @@ impl TryFrom<&str> for PlayingTime {
             let range = Range::new(min, max)
                 .context("Minimum playing time cannot be greater than maximum")?;
 
-            Ok(PlayingTime::Range(range))
+            Ok(Self::Range(range))
         } else {
             let count = s
                 .parse::<Minutes>()
                 .context("Failed to parse the exact playing time")?;
 
-            Ok(PlayingTime::Exact(count))
+            Ok(Self::Exact(count))
         }
     }
 }
 
-pub fn read(data_dir: &Path) -> HashMap<String, Game> {
+#[allow(clippy::missing_errors_doc)]
+pub fn read(data_dir: &Path) -> anyhow::Result<HashMap<String, Game>> {
     let mut all_games: HashMap<String, Game> = HashMap::new();
     if let Ok(entries) = fs::read_dir(data_dir) {
         for entry in entries.flatten() {
@@ -80,33 +81,37 @@ pub fn read(data_dir: &Path) -> HashMap<String, Game> {
 
             if path.is_dir() {
                 // The folder name is the ID
-                let game_id = path.file_name().unwrap().to_string_lossy().to_string();
+                let Some(game_id) = path.file_name() else {
+                    bail!("could not get file name of path: {}", path.display());
+                };
+                let game_id = game_id.to_string_lossy().to_string();
 
                 let metadata_path = path.join("metadata.yml");
                 let rules_path = path.join("rules.md");
 
                 if metadata_path.exists() && rules_path.exists() {
                     let yaml_content = fs::read_to_string(&metadata_path)
-                        .unwrap_or_else(|e| panic!("Failed to read {metadata_path:?}: {e:?}"));
+                        .context(format!("failed to read {}", metadata_path.display()))?;
 
                     let metadata_content: MetadataContent = serde_yaml::from_str(&yaml_content)
-                        .unwrap_or_else(|e| panic!("Invalid YAML in {metadata_path:?}: {e:?}"));
+                        .context(format!("invalid YAML in {}", metadata_path.display()))?;
                     let metadata =
-                        GameMetadata::try_from_content(game_id.clone(), metadata_content).unwrap();
+                        GameMetadata::try_from_content(game_id.clone(), metadata_content)
+                            .context(format!("failed to read metadata for {game_id}"))?;
 
                     let rules = fs::read_to_string(&rules_path)
-                        .unwrap_or_else(|e| panic!("Failed to read {rules_path:?}: {e:?}"));
+                        .context(format!("Failed to read {}", rules_path.display()))?;
 
                     let existing_game = all_games.insert(game_id.clone(), Game { metadata, rules });
                     if existing_game.is_some() {
-                        panic!("two games with ID '{game_id}' exist");
+                        bail!("two games with ID '{game_id}' exist");
                     }
                 } else {
-                    panic!("game '{game_id}' is missing metadata.yml or rules.md");
+                    bail!("game '{game_id}' is missing metadata.yml or rules.md");
                 }
             }
         }
     }
 
-    all_games
+    Ok(all_games)
 }

@@ -19,3 +19,5 @@ tauri-plugin-opener = "=2.5.4"
 serde = { workspace = true, features = ["derive"] }
 serde_json = { workspace = true }
 
+[lints]
+workspace = true

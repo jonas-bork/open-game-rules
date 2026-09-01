@@ -1,4 +1,5 @@
 use leptos::prelude::*;
+use std::fmt::Write;
 
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub enum CardVariant {
@@ -37,10 +38,11 @@ pub fn card(
 
     let is_clickable = on_click.is_some();
     if is_clickable {
-        class.push_str(&format!(
+        let _ = write!(
+            class,
             " cursor-pointer transition-all duration-200 ease-in-out {}",
             variant.clickable_classes()
-        ));
+        );
     }
 
     view! {

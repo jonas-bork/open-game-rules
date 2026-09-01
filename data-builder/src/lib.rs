@@ -78,13 +78,13 @@ impl TryFrom<&str> for Players {
                 bail!("Minimum player count cannot be greater than maximum");
             }
 
-            Ok(Players::Range { min, max })
+            Ok(Self::Range { min, max })
         } else {
             let count = value
                 .parse::<PlayerCount>()
                 .context("Failed to parse the exact player count")?;
 
-            Ok(Players::Exact(count))
+            Ok(Self::Exact(count))
         }
     }
 }
@@ -96,10 +96,13 @@ pub struct Game {
     pub rules: String,
 }
 
-pub fn build_games(data_dir: &Path, out_file: &Path) {
-    let games = read::read(data_dir);
-    let json_output = serde_json::to_string(&games).expect("Failed to serialize to JSON");
-    fs::write(out_file, json_output).expect("Failed to write generated_database.json");
+#[allow(clippy::missing_errors_doc)]
+pub fn build_games(data_dir: &Path, out_file: &Path) -> anyhow::Result<()> {
+    let games = read::read(data_dir)?;
+    let json_output = serde_json::to_string(&games).context("failed to serialize to JSON")?;
+    fs::write(out_file, json_output).context("failed to write generated_database.json")?;
+
+    Ok(())
 
     // DEBUGGING
     // let json_output =
