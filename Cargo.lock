@@ -3100,6 +3100,7 @@ dependencies = [
 name = "open-game-rules-core"
 version = "0.1.0-dev"
 dependencies = [
+ "anyhow",
  "crux_core",
  "facet",
  "open-game-rules-data-builder",

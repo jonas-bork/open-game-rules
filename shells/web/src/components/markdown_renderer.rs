@@ -2,11 +2,11 @@ use leptos::prelude::*;
 use pulldown_cmark::{Event, HeadingLevel, Options, Parser, Tag, TagEnd, html};
 
 #[component]
-pub fn MarkdownRenderer(markdown: String) -> impl IntoView {
+pub fn MarkdownRenderer(markdown: impl AsRef<str>) -> impl IntoView {
     let mut options = Options::empty();
     options.insert(Options::ENABLE_TABLES);
 
-    let parser = Parser::new_ext(&markdown, options);
+    let parser = Parser::new_ext(markdown.as_ref(), options);
 
     let shifted_parser = parser.map(|event| match event {
         Event::Start(Tag::Heading {
@@ -36,7 +36,7 @@ pub fn MarkdownRenderer(markdown: String) -> impl IntoView {
     }
 }
 
-fn shift_heading(level: HeadingLevel) -> HeadingLevel {
+const fn shift_heading(level: HeadingLevel) -> HeadingLevel {
     match level {
         HeadingLevel::H1 => HeadingLevel::H2,
         HeadingLevel::H2 => HeadingLevel::H3,

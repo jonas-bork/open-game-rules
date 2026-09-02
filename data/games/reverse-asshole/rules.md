@@ -1,21 +1,38 @@
-All cards in the deck (including jokers) are distributed evenly to all players. You're not allowed to look at the cards you receive.
+# Setup
 
-Each player has a deck of cards that are facing down (so no one knows what cards are in there) and some cards on their hands. When it's their turn, they can either play a card from the deck that's facing down or play a card on their hands. The card they play, however, needs to be the same or higher value than the one already out there. If the card they played is lower than the one out there, they pick up the entire stack to their hands (which they're allowed to see). When playing a card from your hand, you're allowed to put down multiple of the same card, e.g. if you have three 9's, you can put all three of them down at once.
+All cards in the deck (including jokers) are distributed evenly to all players face-down. Players are not allowed to look at the cards they receive.
+Throughout the game, players may have to pick up cards. The players are allowed to look at their own picked-up cards, so they should be kept separate from their face-down cards.
 
 The first to get rid of all their cards wins.
 
-2 is both the highest number and the lowest. This means that you're allowed to put a 2 onto any card and you're also able to put anything onto a 2.
+Make room for a common "played cards" pile and decide who starts.
 
-A 10 and joker are special cards and can be played on any other card.
-A 10 removes the entire current stack out of play and then afterwards you can play any card on the empty table.
-A joker is a "see-through-card" so the next person just needs to play as if the they need to act on the card below.
+# Turn Taking
 
-# Interrupts
+The turn-taking player must play a card by placing it face-up in the played cards pile. They can either play the top card of their face-down pile, or play any one of their picked-up cards.
 
-If someone puts down a card that you have on your hand, then you can interrupt (e.g. "jump" in) and put down your card on top of theirs. After interrupting, the turn proceeds from you, meaning you can skip some people with this. When multiple people interrupt at once, the turn proceeds from the person whose card is at the top (since you can see it as the top person interrupting the below person who interrupted the below person and so on).
+If the card they played is lower value than the previous top card in the played cards pile, the player must pick up all the cards in the played cards pile (including the card they just played).
+If the card instead is equal or higher value, or the played cards pile were empty, the turn goes to the next player.
 
-You're allowed to interrupt yourself, e.g. if you took a card from your deck and you had the same card on your hand, then you're allowed to put down the card on your hand (if the others aren't quicker than you).
+The ranking of the cards (excluding special cards) is as follows, from lowest value to highest value:
+3, 4, 5, 6, 7, 8, 9, Jack, Queen, King, Ace.
 
-You can also interrupt with anything on a 2.
+If a player has multiple of the same ranked card in their picked-up cards, they may play all of them at once.
 
-**Fairness Note**: 2's are very powerful usually because you can put a 2 down and then hurry and interrupt yourself with any other card, before anyone has a chance to react. To remedy this, we tend to play with that when you interrupt yourself, you need to put down your interrupting cards with the same hand that you put down the first cards with.
+## Special Cards
+
+A special card never has a lower ranking than another card, so they never cause the player to pick up cards.
+
+- 2: can be placed on any card, and any card can be placed on it. An alternative explanation is that it both has the highest and lowest value in the card ranking. Any card may also *jump in* on it (mechanic explained later).
+- 10: removes all cards currently in the played cards pile from play. They can be swept aside, never to be seen again in the game.
+- Joker: a see-through card, meaning it assumes the ranking equal to the card underneath it.
+
+# Jump-Ins
+
+If a player has a card of the same rank as the top card in the played cards pile, they may *jump in* by playing this card even if it is not their turn.
+A jump-in acts as the jump-in player's turn, so the turn proceeds to the next player following the interrupting player. This means players may be skipped.
+If the top card in the played cards pile is a 2, any card can jump in on it by any player.
+
+Note that jump-ins may be chained, such that one player jumps in on another player's jumped-in card.
+
+**Fairness Note**: To avoid players jumping in on themselves after playing a 2 before anyone can react, if a player jumps in on themselves, they must use the same hand to play it that they used to play the first card.

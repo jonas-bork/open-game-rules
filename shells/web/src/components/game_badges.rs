@@ -6,25 +6,25 @@ use crate::components::common::badge::{Badge, BadgeVariant};
 #[component]
 pub fn game_badges(
     game_id: String,
-    equipment: impl IntoIterator<Item = String> + Send + 'static,
+    equipment: String,
     players: String,
     playing_time: String,
     complexity: String,
     tags: impl IntoIterator<Item = String> + Send + 'static,
 ) -> impl IntoView {
-    let transition_name_style = format!("view-transition-name: game-badges-{}", game_id);
+    let transition_name_style = format!("view-transition-name: game-badges-{game_id}");
     let game_id_for_tags = game_id.clone();
     view! {
         <div class="flex flex-col gap-2" style=transition_name_style>
             <BadgeList>
                 // Equipment
-                <Element id=format!("{game_id}-equipment") icon=phosphor_leptos::PACKAGE content={equipment.into_iter().next().unwrap()} />
+                <Element id=format!("{game_id}-equipment") icon=phosphor_leptos::PACKAGE content=equipment />
 
                 // Players
-                <Element id=format!("{game_id}-players") icon=phosphor_leptos::USERS content={players} />
+                <Element id=format!("{game_id}-players") icon=phosphor_leptos::USERS content=players />
 
                 // Playing time
-                <Element id=format!("{game_id}-playing-time") icon=phosphor_leptos::CLOCK content={playing_time} />
+                <Element id=format!("{game_id}-playing-time") icon=phosphor_leptos::CLOCK content=playing_time />
 
                 // Complexity
                 <Element id=format!("{game_id}-complexity") icon=phosphor_leptos::BRAIN content=complexity />
