@@ -11,7 +11,7 @@ crux_core = "=0.20.0"
 serde = "=1.0.229"
 serde_json = "=1.0.151"
 serde_yaml = "=0.9.34"
-thiserror = "=2.0.20"
+thiserror = "=2.0.21"
 
 [workspace.lints.clippy]
 # UM, ACTUALLY
