@@ -57,7 +57,10 @@ in
     nativeBuildInputs = [
       rustToolchain
       pkgs.pkg-config
+
+      # Used for changesets
       pkgs.pnpm
+      pkgs.nodejs_26
     ];
 
     buildInputs = libraries;
