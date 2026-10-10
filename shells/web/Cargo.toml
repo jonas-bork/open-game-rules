@@ -5,11 +5,11 @@ edition.workspace = true
 
 [dependencies]
 open-game-rules-core = { path = "../../core" }
-leptos = { version = "=0.8.20", features = ["csr"] }
+leptos = { version = "=0.8.21", features = ["csr"] }
 phosphor-leptos = "=0.8.0"
 pulldown-cmark = "=0.13.4"
 ammonia = "=4.2.0"
-leptos_router = "=0.8.15"
+leptos_router = "=0.8.16"
 web-sys = "=0.3.106"
 wasm-bindgen = "=0.2.129"
 js-sys = "=0.3.106"
