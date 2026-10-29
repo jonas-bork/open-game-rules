@@ -7,7 +7,7 @@ edition.workspace = true
 open-game-rules-core = { path = "../../core" }
 leptos = { version = "=0.8.20", features = ["csr"] }
 phosphor-leptos = "=0.8.0"
-pulldown-cmark = "=0.13.4"
+pulldown-cmark = "=0.13.5"
 ammonia = "=4.2.4"
 leptos_router = "=0.8.15"
 web-sys = "=0.3.106"
