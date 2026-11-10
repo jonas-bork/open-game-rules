@@ -10,9 +10,9 @@ phosphor-leptos = "=0.8.0"
 pulldown-cmark = "=0.13.6"
 ammonia = "=4.2.4"
 leptos_router = "=0.8.15"
-web-sys = "=0.3.106"
-wasm-bindgen = "=0.2.129"
-js-sys = "=0.3.106"
+web-sys = "=0.3.107"
+wasm-bindgen = "=0.2.130"
+js-sys = "=0.3.107"
 
 [lints]
 workspace = true
